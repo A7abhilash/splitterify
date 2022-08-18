@@ -1,6 +1,11 @@
 const router = require("express").Router();
 const pool = require("../config/db");
 
+// GET /
+router.get("/", (req, res) => {
+  return res.json({ msg: "Hello World!" });
+});
+
 // create database url_shortener
 router.get("/create-database", (req, res) => {
   try {
