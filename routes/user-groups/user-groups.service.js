@@ -1,0 +1,82 @@
+const pool = require("../../config/db");
+const shortid = require("shortid");
+
+module.exports = {
+  addNewBillGroup: (data = [], callback) => {
+    let sql = `insert into user_groups values`;
+    data.forEach((item, index) => {
+      sql += `(
+		"${item.bill_id}",
+		"${item.user_id}",
+		"${item.owes_to}",
+		"${item.expense}",
+		NULL,
+		"PENDING"
+	)`;
+
+      if (index !== data.length - 1) {
+        sql += ", ";
+      }
+    });
+
+    pool.query(sql, (err, results) => {
+      if (err) {
+        return callback(err);
+      }
+
+      return callback(err, results);
+    });
+  },
+
+  // updateUrlVisitCount: (short_id, count, callback) => {
+  //   const sql = `update urls set visits=${count} where short_id="${short_id}"`;
+  //   pool.query(sql, () => callback());
+  // },
+
+  // updateShortUrl: (short_id, new_short_id, callback) => {
+  //   const sql = `update urls set short_id="${new_short_id}" where short_id="${short_id}"`;
+  //   pool.query(sql, (err, result) => {
+  // 	if (err) {
+  // 	  return callback(err);
+  // 	}
+
+  // 	return callback(err, result[0]);
+  //   });
+  // },
+
+  getBillGroupsOfUserId: (user_id, callback) => {
+    const sql = `select B.bill_id, B.name, B.expense, B.created_date, B.created_by, U1.user_id, U1.userName, U1.phoneNo, U1.email, U2.user_id as owner_user_id, U2.userName as owner_userName, U2.phoneNo as owner_phoneNo, U2.email as owner_email, UG.status, UG.paid_date, UG.owes_to, UG.expense
+					from user_groups UG
+					join users U1 
+					on UG.user_id=U1.user_id and UG.user_id="${user_id}"
+					join users U2 on UG.owes_to=U2.user_id 
+					join bills B
+					on UG.bill_id=B.bill_id
+  				`;
+    pool.query(sql, (err, result) => {
+      if (err) {
+        return callback(err);
+      }
+
+      return callback(err, result);
+    });
+  },
+
+  getBillMembersByBillId: (bill_id, callback) => {
+    const sql = `select B.bill_id, B.name, B.expense, B.created_date, B.created_by, U1.user_id, U1.userName, U1.phoneNo, U1.email, U2.user_id as owner_user_id, U2.userName as owner_userName, U2.phoneNo as owner_phoneNo, U2.email as owner_email, UG.status, UG.paid_date, UG.owes_to, UG.expense
+				from user_groups UG
+				join users U1 
+				on UG.user_id=U1.user_id
+				join users U2 on UG.owes_to=U2.user_id 
+				join bills B
+				on UG.bill_id=B.bill_id and UG.bill_id="${bill_id}"
+  			`;
+    pool.query(sql, (err, result) => {
+      if (err) {
+        return callback(err);
+      }
+
+      return callback(err, result);
+    });
+  },
+};
