@@ -4,11 +4,22 @@ import {colors, fonts} from '../../styles';
 import {useAuth} from '../../contexts/AuthContext';
 import IdenticonAvatar from '../../containers/IdenticonAvatar';
 
-// scene-1: PENDING PAYMENTS
-// scene-2: MY USER GROUPS
-
-export default function ListItem({item, is_scene_1 = false}) {
+export default function ListItem({item, scene}) {
   const {user} = useAuth();
+
+  const label1 = {
+    PENDING_PAYMENTS: 'Owes To',
+    MY_USER_GROUPS: 'Created By',
+    RECEIVED_HISTORY: 'Received By',
+    SENT_HISTORY: 'Sent To',
+  };
+
+  const label2 = {
+    PENDING_PAYMENTS: 'Pay',
+    MY_USER_GROUPS: 'Total Expense',
+    RECEIVED_HISTORY: 'Received Amount',
+    SENT_HISTORY: 'Sent Amount',
+  };
 
   return (
     <TouchableOpacity style={styles.itemContainer}>
@@ -16,28 +27,27 @@ export default function ListItem({item, is_scene_1 = false}) {
         <Text style={styles.name}>{item?.name}</Text>
         <View style={styles.row}>
           <View>
-            <Text style={styles.label}>
-              {is_scene_1 ? 'Owes To' : 'Created By'}
-            </Text>
+            <Text style={styles.label}>{label1[scene]}</Text>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <View style={{paddingBottom: 5}}>
                 <IdenticonAvatar
                   text={
-                    item.owner_email || item.owner_userName + item.owner_user_id
+                    item.owner_email ||
+                    item.owner_userName + item.owner_user_id ||
+                    item.email ||
+                    item.userName + item.user_id
                   }
                 />
               </View>
               <Text style={styles.value}>
-                {is_scene_1 || item?.created_by !== user?.user_id
+                {item?.created_by !== user?.user_id
                   ? item?.owner_userName
                   : 'You'}
               </Text>
             </View>
           </View>
           <View>
-            <Text style={styles.label}>
-              {is_scene_1 ? 'Pay' : 'Total Expense'}
-            </Text>
+            <Text style={styles.label}>{label2[scene]}</Text>
             <Text style={styles.value}>₹ {item?.expense}</Text>
           </View>
         </View>

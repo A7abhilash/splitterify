@@ -25,7 +25,9 @@ export default function PendingBillPayment() {
         keyExtractor={(item, index) =>
           item.bill_id + item.user_id + item.owes_to + item.guestName + index
         }
-        renderItem={({item}) => <ListItem item={item} is_scene_1 />}
+        renderItem={({item}) => (
+          <ListItem item={item} scene="PENDING_PAYMENTS" />
+        )}
       />
     </View>
   );

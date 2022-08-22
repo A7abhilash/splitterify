@@ -9,8 +9,8 @@ export default function RenderHomeTabs() {
   const layout = useWindowDimensions();
   const [index, setIndex] = useState(0);
   const [routes, setRoutes] = useState([
-    {key: 'pending_payments', title: 'Pending Payments'},
     {key: 'my_user_groups', title: 'My User Groups'},
+    {key: 'pending_payments', title: 'Pending Payments'},
   ]);
 
   const renderScene = ({route}) => {

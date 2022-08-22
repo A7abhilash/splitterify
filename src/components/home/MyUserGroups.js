@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {useData} from '../../contexts/DataContext';
 import Loading from '../../containers/Loading';
 import ListItem from './ListItem';
+import CreateNewBillSplitGroup from '../bills/CreateNewBillSplitGroup';
 
 export default function MyUserGroups() {
   const {loading, userGroups, billsGroupCreated} = useData();
@@ -14,8 +15,8 @@ export default function MyUserGroups() {
       setList(
         items?.sort(
           (A, B) =>
-            new Date(A.created_date).getTime() -
-            new Date(B.created_date).getTime(),
+            new Date(B.created_date).getTime() -
+            new Date(A.created_date).getTime(),
         ),
       );
     }
@@ -32,8 +33,9 @@ export default function MyUserGroups() {
         keyExtractor={(item, index) =>
           item.bill_id + item.user_id + item.owes_to + item.guestName + index
         }
-        renderItem={({item}) => <ListItem item={item} />}
+        renderItem={({item}) => <ListItem item={item} scene="MY_USER_GROUPS" />}
       />
+      <CreateNewBillSplitGroup />
     </View>
   );
 }

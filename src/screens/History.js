@@ -3,10 +3,15 @@ import React from 'react';
 
 export default function History() {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>History</Text>
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: 10,
+  },
+});
