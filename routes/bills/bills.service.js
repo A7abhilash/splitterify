@@ -52,7 +52,7 @@ module.exports = {
         return callback(err);
       }
 
-      return callback(err, result);
+      return callback(err, result[0]);
     });
   },
 

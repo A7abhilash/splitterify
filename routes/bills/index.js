@@ -1,6 +1,10 @@
 const router = require("express").Router();
 const { ensureAuth } = require("../../middlewares/auth");
-const { addNewBill, getBillsCreatedByUserId } = require("./bills.service");
+const {
+  addNewBill,
+  getBillsCreatedByUserId,
+  getBillDetailsByBillId,
+} = require("./bills.service");
 
 // GET /bills
 // DESC Return all the bill split groups created by user
@@ -19,6 +23,31 @@ router.get("/", ensureAuth, async (req, res) => {
         success: 1,
         msg: "Successfully fetched your bill split groups!",
         results,
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Server error", success: 0 });
+  }
+});
+
+// GET /bills/:bill_id
+// DESC Return the details of bill using bill id
+router.get("/:bill_id", ensureAuth, async (req, res) => {
+  try {
+    getBillDetailsByBillId(req.params.bill_id, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          success: 0,
+          msg: err.sqlMessage,
+        });
+      }
+
+      return res.status(200).json({
+        success: 1,
+        msg: "Successfully fetched details of bill split group!",
+        result,
       });
     });
   } catch (error) {
