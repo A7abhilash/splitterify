@@ -2,7 +2,6 @@ import {StyleSheet} from 'react-native';
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeTabNavigator from './HomeTabNavigator';
-import {DataProvider} from '../contexts/DataContext';
 import BillGroup from '../screens/BillGroup';
 
 export default function AuthStack() {
