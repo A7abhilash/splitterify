@@ -47,12 +47,13 @@ module.exports = {
 				join users U
 				on B.created_by = U.user_id and B.bill_id = "${bill_id}"
 				`;
-    pool.query(sql, (err, result) => {
+    pool.query(sql, (err, results) => {
+      console.log(results);
       if (err) {
         return callback(err);
       }
 
-      return callback(err, result[0]);
+      return callback(err, results[0]);
     });
   },
 

@@ -4,6 +4,8 @@ const {
   addNewBillGroup,
   getBillGroupsOfUserId,
   getBillMembersByBillId,
+  updateBillPayment,
+  getBillGroupOfBillIdAndUserId,
 } = require("./user-groups.service");
 
 // GET /user_groups/groups_of_user
@@ -74,6 +76,64 @@ router.post("/create", ensureAuth, async (req, res) => {
         msg: "Successfully added members to bill split group!",
       });
     });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Server error", success: 0 });
+  }
+});
+
+// PATCH /user_groups/update
+// DESC Create a new bill split group
+router.patch("/update/:bill_id", ensureAuth, async (req, res) => {
+  try {
+    getBillGroupOfBillIdAndUserId(
+      req.params.bill_id,
+      req.user.user_id,
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            success: 0,
+            msg: err.sqlMessage,
+          });
+        }
+
+        if (!result) {
+          return res.status(500).json({
+            success: 0,
+            msg: "Invalid Bill Group",
+          });
+        }
+        if (
+          result.user_id === req.user.user_id ||
+          result.owes_to === req.user.user_id
+        ) {
+          updateBillPayment(
+            req.params.bill_id,
+            req.user.user_id,
+            (_err, results) => {
+              if (_err) {
+                console.log(_err);
+                return res.status(500).json({
+                  success: 0,
+                  msg: _err.sqlMessage,
+                });
+              }
+
+              return res.status(200).json({
+                success: 1,
+                msg: "Successfully marked as paid!",
+              });
+            }
+          );
+        } else {
+          return res.status(500).json({
+            success: 0,
+            msg: "Invalid Bill Group",
+          });
+        }
+      }
+    );
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Server error", success: 0 });

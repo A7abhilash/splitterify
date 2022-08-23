@@ -3,6 +3,8 @@ const shortid = require("shortid");
 
 module.exports = {
   addNewBillGroup: (data = [], callback) => {
+    const dummy_id = shortid.generate();
+
     let sql = `insert into user_groups values`;
     data.forEach((item, index) => {
       sql += `(
@@ -28,21 +30,31 @@ module.exports = {
     });
   },
 
-  // updateUrlVisitCount: (short_id, count, callback) => {
-  //   const sql = `update urls set visits=${count} where short_id="${short_id}"`;
-  //   pool.query(sql, () => callback());
-  // },
+  updateBillPayment: (bill_id, user_id, callback) => {
+    let paid_date = `${new Date().getFullYear()}-${
+      new Date().getMonth() + 1
+    }-${new Date().getDate()}`;
 
-  // updateShortUrl: (short_id, new_short_id, callback) => {
-  //   const sql = `update urls set short_id="${new_short_id}" where short_id="${short_id}"`;
-  //   pool.query(sql, (err, result) => {
-  // 	if (err) {
-  // 	  return callback(err);
-  // 	}
+    const sql = `update user_groups set paid_date="${paid_date}", status="PAID" where bill_id="${bill_id}" AND user_id="${user_id}"`;
+    pool.query(sql, (err, result) => {
+      if (err) {
+        return callback(err);
+      }
 
-  // 	return callback(err, result[0]);
-  //   });
-  // },
+      return callback(err, result[0]);
+    });
+  },
+
+  getBillGroupOfBillIdAndUserId: (bill_id, user_id, callback) => {
+    const sql = `select * from user_groups where bill_id="${bill_id}" AND user_id="${user_id}"`;
+    pool.query(sql, (err, results) => {
+      if (err) {
+        return callback(err);
+      }
+
+      return callback(err, results[0]);
+    });
+  },
 
   getBillGroupsOfUserId: (user_id, callback) => {
     const sql = `select B.bill_id, B.name, B.expense, B.created_date, B.created_by, U1.user_id, U1.userName, U1.phoneNo, U1.email, U2.user_id as owner_user_id, U2.userName as owner_userName, U2.phoneNo as owner_phoneNo, U2.email as owner_email, UG.status, UG.paid_date, UG.owes_to, UG.expense
