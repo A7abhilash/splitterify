@@ -80,6 +80,7 @@ router.post("/create", ensureAuth, async (req, res) => {
       return res.status(200).json({
         success: 1,
         msg: "Successfully created new bill split group!",
+        bill_id: results.bill_id,
       });
     });
   } catch (error) {

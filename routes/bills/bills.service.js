@@ -3,12 +3,12 @@ const shortid = require("shortid");
 
 module.exports = {
   addNewBill: (data, callback) => {
-    const short_id = shortid.generate();
+    const bill_id = shortid.generate();
     let created_date = `${new Date().getFullYear()}-${
       new Date().getMonth() + 1
     }-${new Date().getDate()}`;
 
-    const sql = `insert into bills values("${short_id}",
+    const sql = `insert into bills values("${bill_id}",
 					  "${data.name}",
 					  "${data.type}",
 					  "${data.expense}",
@@ -21,7 +21,7 @@ module.exports = {
         return callback(err);
       }
 
-      return callback(err, results);
+      return callback(err, { ...results, bill_id });
     });
   },
 

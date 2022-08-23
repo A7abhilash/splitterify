@@ -89,7 +89,7 @@ router.post("/signIn", (req, res) => {
   }
 });
 
-// PATCH /update
+// PATCH /user
 // Update an user details
 router.patch("/user/", ensureAuth, (req, res) => {
   // console.log(req.body);
@@ -120,9 +120,11 @@ router.patch("/user/", ensureAuth, (req, res) => {
   }
 });
 
+// GET /user
+// Fetch user details
 router.get("/user", ensureAuth, (req, res) => {
   try {
-    getUserById(req.user.user_id, (err, result) => {
+    getUserById(req.body.user_id || req.user.user_id, (err, result) => {
       if (err || !result) {
         console.log(err);
         return res.status(500).json({
