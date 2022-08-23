@@ -3,6 +3,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeTabNavigator from './HomeTabNavigator';
 import {DataProvider} from '../contexts/DataContext';
+import BillGroup from '../screens/BillGroup';
 
 export default function AuthStack() {
   const Stack = createNativeStackNavigator();
@@ -16,6 +17,7 @@ export default function AuthStack() {
           headerShown: false,
         }}
       />
+      <Stack.Screen name="BillGroup" component={BillGroup} />
     </Stack.Navigator>
   );
 }

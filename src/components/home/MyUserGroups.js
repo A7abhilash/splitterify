@@ -4,6 +4,7 @@ import {useData} from '../../contexts/DataContext';
 import Loading from '../../containers/Loading';
 import ListItem from './ListItem';
 import CreateNewBillSplitGroup from '../bills/CreateNewBillSplitGroup';
+import ListEmptyComponent from '../../containers/ListEmptyComponent';
 
 export default function MyUserGroups() {
   const {loading, userGroups, billsGroupCreated} = useData();
@@ -34,6 +35,7 @@ export default function MyUserGroups() {
           item.bill_id + item.user_id + item.owes_to + item.guestName + index
         }
         renderItem={({item}) => <ListItem item={item} scene="MY_USER_GROUPS" />}
+        ListEmptyComponent={<ListEmptyComponent text="No groups found..." />}
       />
       <CreateNewBillSplitGroup />
     </View>

@@ -3,6 +3,7 @@ import React, {useEffect, useState} from 'react';
 import {useData} from '../../contexts/DataContext';
 import Loading from '../../containers/Loading';
 import ListItem from './ListItem';
+import ListEmptyComponent from '../../containers/ListEmptyComponent';
 
 export default function PendingBillPayment() {
   const {loading, userGroups} = useData();
@@ -28,6 +29,9 @@ export default function PendingBillPayment() {
         renderItem={({item}) => (
           <ListItem item={item} scene="PENDING_PAYMENTS" />
         )}
+        ListEmptyComponent={
+          <ListEmptyComponent text="No payments pending..." />
+        }
       />
     </View>
   );

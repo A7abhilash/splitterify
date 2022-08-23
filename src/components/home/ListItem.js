@@ -2,10 +2,13 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {colors, fonts} from '../../styles';
 import {useAuth} from '../../contexts/AuthContext';
-import IdenticonAvatar from '../../containers/IdenticonAvatar';
+import {useNavigation} from '@react-navigation/native';
+import AvatarName from '../../containers/AvatarName';
 
 export default function ListItem({item, scene}) {
   const {user} = useAuth();
+
+  const navigation = useNavigation();
 
   const label1 = {
     PENDING_PAYMENTS: 'Owes To',
@@ -22,29 +25,27 @@ export default function ListItem({item, scene}) {
   };
 
   return (
-    <TouchableOpacity style={styles.itemContainer}>
+    <TouchableOpacity
+      style={styles.itemContainer}
+      onPress={() => navigation.navigate('BillGroup', {bill_id: item.bill_id})}>
       <View>
         <Text style={styles.name}>{item?.name}</Text>
         <View style={styles.row}>
           <View>
             <Text style={styles.label}>{label1[scene]}</Text>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <View style={{paddingBottom: 5}}>
-                <IdenticonAvatar
-                  text={
-                    item.owner_email ||
-                    item.owner_userName + item.owner_user_id ||
-                    item.email ||
-                    item.userName + item.user_id
-                  }
-                />
-              </View>
-              <Text style={styles.value}>
-                {item?.created_by !== user?.user_id
+            <AvatarName
+              text={
+                item.owner_email ||
+                item.owner_userName + item.owner_user_id ||
+                item.email ||
+                item.userName + item.user_id
+              }
+              name={
+                item?.created_by !== user?.user_id
                   ? item?.owner_userName
-                  : 'You'}
-              </Text>
-            </View>
+                  : 'You'
+              }
+            />
           </View>
           <View>
             <Text style={styles.label}>{label2[scene]}</Text>
