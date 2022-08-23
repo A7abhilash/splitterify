@@ -25,7 +25,9 @@ export default function UserGroupItem({item}) {
       <View style={{...styles.row}}>
         <AvatarName
           text={item.email || item.userName + item.user_id}
-          name={item.userName}
+          userName={item.userName}
+          email={item.email}
+          phoneNo={item.phoneNo}
         />
         <Text
           style={{

@@ -40,11 +40,9 @@ export default function ListItem({item, scene}) {
                 item.email ||
                 item.userName + item.user_id
               }
-              name={
-                item?.created_by !== user?.user_id
-                  ? item?.owner_userName
-                  : 'You'
-              }
+              userName={item?.owner_userName || item?.userName}
+              email={item?.owner_email || item?.email}
+              phoneNo={item?.owner_phoneNo}
             />
           </View>
           <View>

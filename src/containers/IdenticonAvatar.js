@@ -7,9 +7,10 @@ export default function IdenticonAvatar({text, size = 18}) {
 
   useEffect(() => {
     if (text) {
+      const _text = text + 'fshd3782hdje872jsahdwq';
       let textHexValue = '';
-      for (let i = 0; i < text.length; i++) {
-        textHexValue += text.charCodeAt(i).toString(16);
+      for (let i = 0; i < _text.length; i++) {
+        textHexValue += _text.charCodeAt(i).toString(16);
       }
       const identicon = new Identicon(textHexValue, 30).toString();
       setImg(`data:image/png;base64,${identicon}`);
