@@ -3,7 +3,12 @@ const router = require("express").Router();
 const { genSaltSync, hashSync, compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 const { ensureAuth } = require("../../middlewares/auth");
-const { getUserByEmail, createUser, updateUser } = require("./auth.service");
+const {
+  getUserByEmail,
+  createUser,
+  updateUser,
+  getUserById,
+} = require("./auth.service");
 
 // POST /signUp
 // DESC Register a new user
@@ -116,7 +121,23 @@ router.patch("/user/", ensureAuth, (req, res) => {
 });
 
 router.get("/user", ensureAuth, (req, res) => {
-  return res.json({ success: req.user ? 1 : 0, user: req.user });
+  try {
+    getUserById(req.user.user_id, (err, result) => {
+      if (err || !result) {
+        console.log(err);
+        return res.status(500).json({
+          success: 0,
+          msg: "Failed to fetch user",
+        });
+      }
+
+      delete result.password;
+      return res.json({ success: 1, user: result });
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Server error" });
+  }
 });
 
 module.exports = router;

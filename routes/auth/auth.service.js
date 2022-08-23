@@ -32,7 +32,7 @@ module.exports = {
   },
 
   getUserById: (user_id, callback) => {
-    const sql = `select user_id, userName, email, password from users where user_id="${user_id}"`;
+    const sql = `select user_id, userName, email, phoneNo, password from users where user_id="${user_id}"`;
     pool.query(sql, (err, result) => {
       if (err) {
         return callback(err);
@@ -43,7 +43,7 @@ module.exports = {
   },
 
   getUserByEmail: (email, callback) => {
-    const sql = `select user_id, userName, email, password from users where email="${email}"`;
+    const sql = `select user_id, userName, email, phoneNo, password from users where email="${email}"`;
     pool.query(sql, (err, result) => {
       if (err) {
         return callback(err);
