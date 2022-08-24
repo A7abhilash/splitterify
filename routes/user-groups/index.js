@@ -104,6 +104,14 @@ router.patch("/update/:bill_id", ensureAuth, async (req, res) => {
             msg: "Invalid Bill Group",
           });
         }
+
+        if (result.status === "PAID") {
+          return res.status(500).json({
+            success: 0,
+            msg: "Payment already completed!",
+          });
+        }
+
         if (
           result.user_id === req.user.user_id ||
           result.owes_to === req.user.user_id

@@ -52,4 +52,15 @@ module.exports = {
       return callback(err, result[0]);
     });
   },
+
+  searchUserByUserName: (name, callback) => {
+    const sql = `select user_id, userName, email, phoneNo from users where userName LIKE "%${name}%"`;
+    pool.query(sql, (err, results) => {
+      if (err) {
+        return callback(err);
+      }
+
+      return callback(err, results);
+    });
+  },
 };

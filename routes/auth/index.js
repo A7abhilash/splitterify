@@ -8,9 +8,10 @@ const {
   createUser,
   updateUser,
   getUserById,
+  searchUserByUserName,
 } = require("./auth.service");
 
-// POST /signUp
+// POST /auth/signUp
 // DESC Register a new user
 router.post("/signUp", (req, res) => {
   // console.log(req.body);
@@ -38,7 +39,7 @@ router.post("/signUp", (req, res) => {
   }
 });
 
-// POST /signIn
+// POST /auth/signIn
 // Authenticate a user
 router.post("/signIn", (req, res) => {
   // console.log(req.body);
@@ -89,7 +90,7 @@ router.post("/signIn", (req, res) => {
   }
 });
 
-// PATCH /user
+// PATCH /auth/user
 // Update an user details
 router.patch("/user/", ensureAuth, (req, res) => {
   // console.log(req.body);
@@ -120,7 +121,7 @@ router.patch("/user/", ensureAuth, (req, res) => {
   }
 });
 
-// GET /user
+// GET /auth/user
 // Fetch user details
 router.get("/user", ensureAuth, (req, res) => {
   try {
@@ -135,6 +136,28 @@ router.get("/user", ensureAuth, (req, res) => {
 
       delete result.password;
       return res.json({ success: 1, user: result });
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Server error" });
+  }
+});
+
+// GET /auth/user/search
+// Fetch user details
+router.get("/user/search", ensureAuth, (req, res) => {
+  // console.log(req.query.name.toLowerCase());
+  try {
+    searchUserByUserName(req.query.name.toLowerCase(), (err, results) => {
+      if (err || !results) {
+        console.log(err);
+        return res.status(500).json({
+          success: 0,
+          msg: "Failed to search users",
+        });
+      }
+
+      return res.json({ success: 1, results });
     });
   } catch (error) {
     console.log(error);

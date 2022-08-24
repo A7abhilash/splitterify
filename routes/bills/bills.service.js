@@ -42,7 +42,7 @@ module.exports = {
   // },
 
   getBillDetailsByBillId: (bill_id, callback) => {
-    const sql = `select B.bill_id, B.name, B.expense as total_expense, B.created_date, B.created_by, U.user_id, U.userName, U.phoneNo, U.email
+    const sql = `select B.bill_id, B.name, B.expense as total_expense, B.type, B.created_date, B.created_by, U.user_id, U.userName, U.phoneNo, U.email
 				from bills B
 				join users U
 				on B.created_by = U.user_id and B.bill_id = "${bill_id}"
