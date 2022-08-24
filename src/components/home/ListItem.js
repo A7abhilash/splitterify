@@ -5,7 +5,7 @@ import {useAuth} from '../../contexts/AuthContext';
 import {useNavigation} from '@react-navigation/native';
 import AvatarName from '../../containers/AvatarName';
 
-export default function ListItem({item, scene}) {
+export default function ListItem({item, scene, show_status = false}) {
   const {user} = useAuth();
 
   const navigation = useNavigation();
@@ -34,7 +34,8 @@ export default function ListItem({item, scene}) {
   return (
     <TouchableOpacity
       style={styles.itemContainer}
-      onPress={() => navigation.navigate('BillGroup', {bill_id: item.bill_id})}>
+      onPress={() => navigation.navigate('BillGroup', {bill_id: item.bill_id})}
+      disabled={show_status}>
       <View>
         <Text style={styles.name}>{item?.name}</Text>
         <View style={styles.row}>
@@ -57,9 +58,22 @@ export default function ListItem({item, scene}) {
             <Text style={styles.value}>₹ {item[expense[scene]]}</Text>
           </View>
         </View>
-        <Text style={styles.created_date}>
-          Group created on: {new Date(item?.created_date).toDateString()}
-        </Text>
+        <View style={styles.row}>
+          <View>
+            <Text style={styles.created_date}>
+              Group created on: {new Date(item?.created_date).toDateString()}
+            </Text>
+          </View>
+          <View>
+            {show_status && (
+              <Text style={styles.created_date}>
+                Split:{' '}
+                {item?.type?.replace('SPLIT_', '') ||
+                  'SPLIT_INDIVIDUALLY'.replace('SPLIT_', '')}
+              </Text>
+            )}
+          </View>
+        </View>
       </View>
     </TouchableOpacity>
   );

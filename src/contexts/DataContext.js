@@ -71,15 +71,15 @@ export function DataProvider({children}) {
     }
   };
 
+  const fetchData = async () => {
+    setLoading(true);
+    await fetchUserBills();
+    await fetchUserGroups();
+    setLoading(false);
+  };
+
   useEffect(() => {
     if (isAuthenticated) {
-      const fetchData = async () => {
-        setLoading(true);
-        await fetchUserBills();
-        await fetchUserGroups();
-        setLoading(false);
-      };
-
       fetchData();
     } else {
       setLoading(false);
@@ -87,7 +87,8 @@ export function DataProvider({children}) {
   }, [isAuthenticated]);
 
   return (
-    <DataContext.Provider value={{loading, userGroups, billsGroupCreated}}>
+    <DataContext.Provider
+      value={{loading, userGroups, billsGroupCreated, fetchData}}>
       {children}
     </DataContext.Provider>
   );

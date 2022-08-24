@@ -9,6 +9,7 @@ import {
   Keyboard,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import {colors, fonts} from '../../styles';
 import {useMsg} from '../../contexts/MsgContext';
 import {BACKEND_URL} from '../../utils';
@@ -28,6 +29,8 @@ export default function CreateNewBillSplitGroup() {
   const [name, setName] = useState('');
   const [expense, setExpense] = useState(0);
   const [switchOn, setSwitchOn] = useState(false);
+
+  const navigation = useNavigation();
 
   const setInitialData = () => {
     setName('');
@@ -65,6 +68,7 @@ export default function CreateNewBillSplitGroup() {
         if (data.success) {
           closeModal();
           // TODO: Navigate to newly created group
+          navigation.navigate('BillGroup', {bill_id: data.bill_id});
         }
         setToast(data.msg);
       } else {

@@ -7,7 +7,7 @@ import CreateNewBillSplitGroup from '../bills/CreateNewBillSplitGroup';
 import ListEmptyComponent from '../../containers/ListEmptyComponent';
 
 export default function MyUserGroups() {
-  const {loading, userGroups, billsGroupCreated} = useData();
+  const {loading, userGroups, billsGroupCreated, fetchData} = useData();
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -36,6 +36,9 @@ export default function MyUserGroups() {
         }
         renderItem={({item}) => <ListItem item={item} scene="MY_USER_GROUPS" />}
         ListEmptyComponent={<ListEmptyComponent text="No groups found..." />}
+        refreshing={loading}
+        onRefresh={fetchData}
+        refreshControl={null}
       />
       <CreateNewBillSplitGroup />
     </View>

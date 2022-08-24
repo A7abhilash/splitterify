@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import ListItem from '../home/ListItem';
 import {useMsg} from '../../contexts/MsgContext';
@@ -49,7 +49,7 @@ export default function GroupDetails({bill_id}) {
 
   return (
     <View>
-      <ListItem item={item} scene="MY_USER_GROUPS" />
+      <ListItem item={item} scene="MY_USER_GROUPS" show_status />
     </View>
   );
 }

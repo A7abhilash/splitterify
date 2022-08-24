@@ -6,7 +6,7 @@ import ListItem from './ListItem';
 import ListEmptyComponent from '../../containers/ListEmptyComponent';
 
 export default function PendingBillPayment() {
-  const {loading, userGroups} = useData();
+  const {loading, userGroups, fetchData} = useData();
   const [list, setList] = useState([]);
 
   useEffect(() => {
@@ -32,6 +32,9 @@ export default function PendingBillPayment() {
         ListEmptyComponent={
           <ListEmptyComponent text="No payments pending..." />
         }
+        refreshing={loading}
+        onRefresh={fetchData}
+        refreshControl={null}
       />
     </View>
   );
