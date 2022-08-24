@@ -36,7 +36,7 @@ export default function HomeTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Transaction History"
+        name="Payment History"
         component={History}
         options={{
           tabBarIcon: ({focused}) => (

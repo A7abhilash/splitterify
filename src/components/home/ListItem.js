@@ -24,6 +24,13 @@ export default function ListItem({item, scene}) {
     SENT_HISTORY: 'Sent Amount',
   };
 
+  const expense = {
+    PENDING_PAYMENTS: 'amount_to_pay',
+    MY_USER_GROUPS: 'total_expense',
+    RECEIVED_HISTORY: 'total_expense',
+    SENT_HISTORY: 'total_expense',
+  };
+
   return (
     <TouchableOpacity
       style={styles.itemContainer}
@@ -47,7 +54,7 @@ export default function ListItem({item, scene}) {
           </View>
           <View>
             <Text style={styles.label}>{label2[scene]}</Text>
-            <Text style={styles.value}>₹ {item?.expense}</Text>
+            <Text style={styles.value}>₹ {item[expense[scene]]}</Text>
           </View>
         </View>
         <Text style={styles.created_date}>

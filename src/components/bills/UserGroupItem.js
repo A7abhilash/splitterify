@@ -6,19 +6,6 @@ import {useAuth} from '../../contexts/AuthContext';
 
 export default function UserGroupItem({item}) {
   const {user} = useAuth();
-  {
-    /* 
-       {
-        "bill_id": "O5jAvdjWv", "created_by": "SJVZ0NC8J", 
-        "created_date": "2022-08-18T00:00:00.000Z", 
-        "email": "n16@test.in", "expense": 700, 
-        "name": "Test-1", "owes_to": "SJVZ0NC8J", 
-        "owner_email": "a7@test.in", "owner_phoneNo": 1234567980, 
-        "owner_userName": "A7", "owner_user_id": "SJVZ0NC8J", 
-        "paid_date": null, "phoneNo": 1234567980, 
-        "status": "PENDING", "userName": "N16", "user_id": "-VT-MtBRI"},
-      */
-  }
 
   return (
     <View style={styles.container}>
@@ -34,7 +21,7 @@ export default function UserGroupItem({item}) {
             ...styles.expense,
             color: item.status === 'PENDING' ? colors.Danger : colors.Success,
           }}>
-          ₹ {item.expense}
+          ₹ {item.amount_to_pay}
         </Text>
       </View>
       <View style={{...styles.row}}>
