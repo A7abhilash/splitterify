@@ -18,8 +18,16 @@
       "sha1": "85af6582a7e6155917c605f9d3fed68c02b23b06"
     },
     {
+      "path": "assets/fonts/Poppins-Italic.ttf",
+      "sha1": "e2bfcd56016c3c915221ef1c5fc1a17b0776eb91"
+    },
+    {
       "path": "assets/fonts/Poppins-Light.ttf",
       "sha1": "e247a92158e112f8bf7b638c8d95381d66b00dbb"
+    },
+    {
+      "path": "assets/fonts/Poppins-LightItalic.ttf",
+      "sha1": "f76102b361e705751a83b7b22fe954daf1f27dd4"
     },
     {
       "path": "assets/fonts/Poppins-Medium.ttf",

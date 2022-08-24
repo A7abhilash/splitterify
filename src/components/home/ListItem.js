@@ -42,10 +42,10 @@ export default function ListItem({item, scene}) {
             <Text style={styles.label}>{label1[scene]}</Text>
             <AvatarName
               text={
-                item.owner_email ||
-                item.owner_userName + item.owner_user_id ||
-                item.email ||
-                item.userName + item.user_id
+                item?.owner_email ||
+                item?.owner_userName + item?.owner_user_id ||
+                item?.email ||
+                item?.userName + item?.user_id
               }
               userName={item?.owner_userName || item?.userName}
               email={item?.owner_email || item?.email}
@@ -58,7 +58,7 @@ export default function ListItem({item, scene}) {
           </View>
         </View>
         <Text style={styles.created_date}>
-          Group created on: {new Date(item.created_date).toDateString()}
+          Group created on: {new Date(item?.created_date).toDateString()}
         </Text>
       </View>
     </TouchableOpacity>
@@ -92,8 +92,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   created_date: {
-    fontSize: 11,
-    fontStyle: 'italic',
+    fontFamily: fonts.PoppinsItalic,
+    fontSize: 9,
     color: 'rgba(0,0,0,0.6)',
   },
 });
