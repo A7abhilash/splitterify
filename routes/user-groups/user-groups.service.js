@@ -57,7 +57,7 @@ module.exports = {
   },
 
   getBillGroupsOfUserId: (user_id, callback) => {
-    const sql = `select B.bill_id, B.name, B.expense, B.created_date, B.created_by, U1.user_id, U1.userName, U1.phoneNo, U1.email, U2.user_id as owner_user_id, U2.userName as owner_userName, U2.phoneNo as owner_phoneNo, U2.email as owner_email, UG.status, UG.paid_date, UG.owes_to, UG.expense
+    const sql = `select B.bill_id, B.name, B.expense as total_expense, B.created_date, B.created_by, U1.user_id, U1.userName, U1.phoneNo, U1.email, U2.user_id as owner_user_id, U2.userName as owner_userName, U2.phoneNo as owner_phoneNo, U2.email as owner_email, UG.status, UG.paid_date, UG.owes_to, UG.expense as amount_to_pay
 					from user_groups UG
 					join users U1 
 					on UG.user_id=U1.user_id and UG.user_id="${user_id}"
@@ -75,7 +75,7 @@ module.exports = {
   },
 
   getBillMembersByBillId: (bill_id, callback) => {
-    const sql = `select B.bill_id, B.name, B.expense, B.created_date, B.created_by, U1.user_id, U1.userName, U1.phoneNo, U1.email, U2.user_id as owner_user_id, U2.userName as owner_userName, U2.phoneNo as owner_phoneNo, U2.email as owner_email, UG.status, UG.paid_date, UG.owes_to, UG.expense
+    const sql = `select B.bill_id, B.name, B.expense as total_expense, B.created_date, B.created_by, U1.user_id, U1.userName, U1.phoneNo, U1.email, U2.user_id as owner_user_id, U2.userName as owner_userName, U2.phoneNo as owner_phoneNo, U2.email as owner_email, UG.status, UG.paid_date, UG.owes_to, UG.expense as amount_to_pay
 				from user_groups UG
 				join users U1 
 				on UG.user_id=U1.user_id
