@@ -3,10 +3,9 @@ const shortid = require("shortid");
 
 module.exports = {
   addNewBillGroup: (data = [], callback) => {
-    const txn_id = shortid.generate();
-
     let sql = `insert into user_groups(txn_id, bill_id, user_id, guestName, owes_to, expense, paid_date, status) values`;
     data.forEach((item, index) => {
+      const txn_id = shortid.generate();
       sql += `(
         "${txn_id}",
         "${item.bill_id}",
