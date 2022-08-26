@@ -93,10 +93,11 @@ router.get("/create-table/bills", (req, res) => {
 router.get("/create-table/user_groups", (req, res) => {
   try {
     const sql = `create table user_groups (
+    txn_id VARCHAR(45) PRIMARY KEY,
 		bill_id VARCHAR(45),
     user_id VARCHAR(45),
-    owes_to VARCHAR(45),
     guestName VARCHAR(200),
+    owes_to VARCHAR(45),
     expense INT(10),
 		paid_date DATE,
     status VARCHAR(45),
