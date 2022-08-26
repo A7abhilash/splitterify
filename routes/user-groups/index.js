@@ -137,7 +137,7 @@ router.patch("/update/", ensureAuth, async (req, res) => {
         } else {
           return res.status(500).json({
             success: 0,
-            msg: "Invalid Bill Group",
+            msg: "Unauthorized Access",
           });
         }
       }
