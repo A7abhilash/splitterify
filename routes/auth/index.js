@@ -143,7 +143,7 @@ router.get("/user", ensureAuth, (req, res) => {
   }
 });
 
-// GET /auth/user/search
+// GET /auth/user/search?name=
 // Fetch user details
 router.get("/user/search", ensureAuth, (req, res) => {
   // console.log(req.query.name.toLowerCase());

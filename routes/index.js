@@ -96,10 +96,10 @@ router.get("/create-table/user_groups", (req, res) => {
 		bill_id VARCHAR(45),
     user_id VARCHAR(45),
     owes_to VARCHAR(45),
+    guestName VARCHAR(200),
     expense INT(10),
 		paid_date DATE,
     status VARCHAR(45),
-    PRIMARY KEY (bill_id, user_id, owes_to),
 		FOREIGN KEY (bill_id) REFERENCES bills(bill_id),
 		FOREIGN KEY (user_id) REFERENCES users(user_id),
 		FOREIGN KEY (owes_to) REFERENCES users(user_id)
