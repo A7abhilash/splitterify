@@ -86,6 +86,8 @@ router.post("/create", ensureAuth, async (req, res) => {
 // DESC Create a new bill split group
 router.patch("/update/", ensureAuth, async (req, res) => {
   try {
+    console.log(req.body.bill_id, req.body.user_id);
+
     getBillGroupOfBillIdAndUserId(
       req.body.bill_id,
       req.body.user_id,
