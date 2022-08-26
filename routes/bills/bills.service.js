@@ -48,7 +48,7 @@ module.exports = {
 				on B.created_by = U.user_id and B.bill_id = "${bill_id}"
 				`;
     pool.query(sql, (err, results) => {
-      console.log(results);
+      // console.log(results);
       if (err) {
         return callback(err);
       }

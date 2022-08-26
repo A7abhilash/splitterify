@@ -82,68 +82,58 @@ router.post("/create", ensureAuth, async (req, res) => {
   }
 });
 
-// PATCH /user_groups/update
+// PATCH /user_groups/update/:txn_id
 // DESC Create a new bill split group
-router.patch("/update/", ensureAuth, async (req, res) => {
+router.patch("/update/:txn_id", ensureAuth, async (req, res) => {
   try {
-    console.log(req.body.bill_id, req.body.user_id);
-
-    getBillGroupOfBillIdAndUserId(
-      req.body.bill_id,
-      req.body.user_id,
-      (err, result) => {
-        if (err) {
-          console.log(err);
-          return res.status(500).json({
-            success: 0,
-            msg: err.sqlMessage,
-          });
-        }
-
-        if (!result) {
-          return res.status(500).json({
-            success: 0,
-            msg: "Invalid Bill Group",
-          });
-        }
-
-        if (result.status === "PAID") {
-          return res.status(500).json({
-            success: 0,
-            msg: "Payment already completed!",
-          });
-        }
-
-        if (
-          result.user_id === req.user.user_id ||
-          result.owes_to === req.user.user_id
-        ) {
-          updateBillPayment(
-            req.params.bill_id,
-            req.user.user_id,
-            (_err, results) => {
-              if (_err) {
-                console.log(_err);
-                return res.status(500).json({
-                  success: 0,
-                  msg: _err.sqlMessage,
-                });
-              }
-
-              return res.status(200).json({
-                success: 1,
-                msg: "Successfully marked as paid!",
-              });
-            }
-          );
-        } else {
-          return res.status(500).json({
-            success: 0,
-            msg: "Unauthorized Access",
-          });
-        }
+    getBillGroupOfBillIdAndUserId(req.params.txn_id, (err, result) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          success: 0,
+          msg: err.sqlMessage,
+        });
       }
-    );
+
+      if (!result) {
+        return res.status(500).json({
+          success: 0,
+          msg: "Invalid Bill Group",
+        });
+      }
+
+      if (result.status === "PAID") {
+        return res.status(500).json({
+          success: 0,
+          msg: "Payment already completed!",
+        });
+      }
+
+      if (
+        result.user_id === req.user.user_id ||
+        result.owes_to === req.user.user_id
+      ) {
+        updateBillPayment(result.bill_id, result.user_id, (_err, results) => {
+          if (_err) {
+            console.log(_err);
+            return res.status(500).json({
+              success: 0,
+              msg: _err.sqlMessage,
+            });
+          }
+
+          return res.status(200).json({
+            success: 1,
+            msg: "Successfully marked as paid!",
+          });
+        });
+      } else {
+        return res.status(500).json({
+          success: 0,
+          msg: "Unauthorized Access",
+        });
+      }
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ msg: "Server error", success: 0 });

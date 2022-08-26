@@ -46,8 +46,8 @@ module.exports = {
     });
   },
 
-  getBillGroupOfBillIdAndUserId: (bill_id, user_id, callback) => {
-    const sql = `select * from user_groups where bill_id="${bill_id}" AND user_id="${user_id}"`;
+  getBillGroupOfBillIdAndUserId: (txn_id, callback) => {
+    const sql = `select * from user_groups where txn_id="${txn_id}"`;
     pool.query(sql, (err, results) => {
       if (err) {
         return callback(err);
