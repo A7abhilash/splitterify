@@ -1,11 +1,13 @@
 const router = require("express").Router();
 const { ensureAuth } = require("../../middlewares/auth");
+const { getBillDetailsByBillId } = require("../bills/bills.service");
 const {
   addNewBillGroup,
   getBillGroupsOfUserId,
   getBillMembersByBillId,
   updateBillPayment,
   getBillGroupOfBillIdAndUserId,
+  getReceivedPaymentRecords,
 } = require("./user-groups.service");
 
 // GET /user_groups/groups_of_user
@@ -24,6 +26,31 @@ router.get("/groups_of_user", ensureAuth, async (req, res) => {
       return res.status(200).json({
         success: 1,
         msg: "Successfully fetched your bill split groups!",
+        results,
+      });
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ msg: "Server error", success: 0 });
+  }
+});
+
+// GET /user_groups/received_history
+// DESC Return all the received history of current user
+router.get("/received_history", ensureAuth, async (req, res) => {
+  try {
+    getReceivedPaymentRecords(req.user.user_id, (err, results) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({
+          success: 0,
+          msg: err.sqlMessage,
+        });
+      }
+
+      return res.status(200).json({
+        success: 1,
+        msg: "Successfully fetched the record history!",
         results,
       });
     });
@@ -62,18 +89,35 @@ router.get("/:bill_id", ensureAuth, async (req, res) => {
 // DESC Create a new bill split group
 router.post("/create", ensureAuth, async (req, res) => {
   try {
-    addNewBillGroup(req.body.groups, (err, results) => {
-      if (err) {
-        console.log(err);
+    getBillDetailsByBillId(req.body.groups[0]?.bill_id, (_err, result) => {
+      if (_err) {
+        console.log(_err);
         return res.status(500).json({
           success: 0,
           msg: err.sqlMessage,
         });
       }
 
-      return res.status(200).json({
-        success: 1,
-        msg: "Successfully added members to bill split group!",
+      if (!result || result.created_by !== req.user.user_id) {
+        return res.status(500).json({
+          success: 0,
+          msg: "Invalid Bill Group",
+        });
+      }
+
+      addNewBillGroup(req.body.groups, (err, results) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            success: 0,
+            msg: err.sqlMessage,
+          });
+        }
+
+        return res.status(200).json({
+          success: 1,
+          msg: "Successfully added members to bill split group!",
+        });
       });
     });
   } catch (error) {

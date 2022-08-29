@@ -10,8 +10,6 @@ app.set("view engine", "ejs");
 app.use(express.json());
 // app.use(cors());
 
-// const whitelist = ["https://link-glance.netlify.app", "http://localhost:3000"];
-// const whitelist = ["https://link-glance.netlify.app"];
 const corsOptions = {
   origin: function (origin, callback) {
     console.log("ORIGIN: ", origin);
@@ -27,7 +25,6 @@ app.use(cors(corsOptions));
 
 // routers
 app.use("/auth", require("./routes/auth"));
-// app.use("/urls", require("./routes/urls/urls"));
 app.use("/bills", require("./routes/bills"));
 app.use("/user_groups", require("./routes/user-groups"));
 app.use("/", require("./routes/"));

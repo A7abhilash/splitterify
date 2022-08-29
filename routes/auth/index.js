@@ -72,11 +72,6 @@ router.post("/signIn", (req, res) => {
           msg: "Login successful",
           token: jwt,
         });
-        // return res.render("dashboard", {
-        //   user: result,
-        //   token: jwt,
-        // });
-        // return res.redirect("/dashboard");
       } else {
         return res.status(404).json({
           success: 0,
