@@ -6,8 +6,6 @@ import {useNavigation} from '@react-navigation/native';
 import AvatarName from '../../containers/AvatarName';
 
 export default function ListItem({item, scene, show_status = false}) {
-  const {user} = useAuth();
-
   const navigation = useNavigation();
 
   const label1 = {
@@ -27,8 +25,8 @@ export default function ListItem({item, scene, show_status = false}) {
   const expense = {
     PENDING_PAYMENTS: 'amount_to_pay',
     MY_USER_GROUPS: 'total_expense',
-    RECEIVED_HISTORY: 'total_expense',
-    SENT_HISTORY: 'total_expense',
+    RECEIVED_HISTORY: 'amount_to_pay',
+    SENT_HISTORY: 'amount_to_pay',
   };
 
   return (

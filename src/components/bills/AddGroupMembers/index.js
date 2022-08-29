@@ -6,7 +6,6 @@ import {BACKEND_URL} from '../../../utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SearchMembers from './SearchMembers';
 import {useMsg} from '../../../contexts/MsgContext';
-import {useAuth} from '../../../contexts/AuthContext';
 import CalculateExpense from './CalculateExpense';
 import Loading from '../../../containers/Loading';
 
