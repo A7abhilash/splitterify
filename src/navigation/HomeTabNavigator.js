@@ -20,9 +20,10 @@ export default function HomeTabNavigator() {
         },
       }}>
       <Tab.Screen
-        name="Splitterify"
+        name="Home"
         component={Home}
         options={{
+          headerTitle: 'Splitterify',
           tabBarIcon: ({focused}) => (
             <Image
               source={icons.home}
@@ -36,9 +37,10 @@ export default function HomeTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="Payment History"
+        name="History"
         component={History}
         options={{
+          headerTitle: 'Payment History',
           tabBarIcon: ({focused}) => (
             <Image
               source={icons.transaction}
@@ -52,9 +54,10 @@ export default function HomeTabNavigator() {
         }}
       />
       <Tab.Screen
-        name="My Profile"
+        name="Profile"
         component={Profile}
         options={{
+          headerTitle: 'My Profile',
           tabBarIcon: ({focused}) => (
             <Image
               source={icons.profile}

@@ -6,8 +6,8 @@ import IdenticonAvatar from './IdenticonAvatar';
 export default function ProfileDetails({user}) {
   return (
     <View style={{padding: 10}}>
-      <View style={{alignItems: 'center', marginVertical: 20}}>
-        <IdenticonAvatar text={user.email} size={80} />
+      <View style={{alignItems: 'center', marginBottom: 20}}>
+        <IdenticonAvatar text={user.email} size={100} />
       </View>
       <View>
         <View style={styles.textInputGroup}>

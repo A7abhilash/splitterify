@@ -4,7 +4,7 @@ import IdenticonAvatar from './IdenticonAvatar';
 import ProfileDetails from './ProfileDetails';
 import {colors, fonts} from '../styles';
 
-export default function AvatarName({text, userName, email, phoneNo}) {
+export default function AvatarName({text, userName, email, phoneNo, isGuest}) {
   const [visible, setVisible] = useState(false);
 
   const openModal = () => setVisible(true);
@@ -16,7 +16,7 @@ export default function AvatarName({text, userName, email, phoneNo}) {
         style={{flexDirection: 'row', alignItems: 'center'}}
         onPress={openModal}>
         <View style={{paddingBottom: 5}}>
-          <IdenticonAvatar text={text} />
+          <IdenticonAvatar text={!isGuest ? text : userName + '1234567890'} />
         </View>
         <Text style={styles.userName}>{userName}</Text>
       </TouchableOpacity>
@@ -40,13 +40,25 @@ export default function AvatarName({text, userName, email, phoneNo}) {
               borderTopRightRadius: 40,
             }}>
             <View>
-              <ProfileDetails
-                user={{
-                  userName,
-                  email,
-                  phoneNo,
-                }}
-              />
+              {!isGuest ? (
+                <ProfileDetails
+                  user={{
+                    userName,
+                    email,
+                    phoneNo,
+                  }}
+                />
+              ) : (
+                <Text
+                  style={{
+                    ...styles.modalBtnText,
+                    color: colors.Warning,
+                    textAlign: 'center',
+                    fontSize: 20,
+                  }}>
+                  Guest User
+                </Text>
+              )}
               <TouchableOpacity
                 onPress={closeModal}
                 style={{...styles.modalBtn}}>

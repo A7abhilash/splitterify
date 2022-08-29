@@ -136,7 +136,7 @@ export default function CreateNewBillSplitGroup() {
             onPress={handleCreate}
             style={{
               ...styles.modalBtn,
-              backgroundColor: colors.Primary,
+              backgroundColor: colors.Success,
               borderRadius: 10,
               paddingVertical: 5,
             }}>

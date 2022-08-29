@@ -7,7 +7,7 @@ import {BACKEND_URL} from '../../utils';
 import {useMsg} from '../../contexts/MsgContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function UserGroupItem({item}) {
+export default function UserGroupItem({item, bill_id}) {
   const {setToast} = useMsg();
   const {user} = useAuth();
 
@@ -28,11 +28,12 @@ export default function UserGroupItem({item}) {
 
       const token = await AsyncStorage.getItem('token');
       const res = await fetch(
-        BACKEND_URL + '/user_groups/update/' + item.bill_id,
+        BACKEND_URL + '/user_groups/update/' + item.txn_id,
         {
           method: 'PATCH',
           headers: new Headers({
             Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
           }),
         },
       );
