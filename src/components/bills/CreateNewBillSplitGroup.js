@@ -67,7 +67,6 @@ export default function CreateNewBillSplitGroup() {
 
         if (data.success) {
           closeModal();
-          // TODO: Navigate to newly created group
           navigation.navigate('BillGroup', {bill_id: data.bill_id});
         }
         setToast(data.msg);
@@ -91,6 +90,7 @@ export default function CreateNewBillSplitGroup() {
       </View>
       <Modal visible={visible} onShow={openModal} onDismiss={closeModal}>
         <View style={styles.innerContainer}>
+          <Text style={styles.headerText}>Create New Bill Split Group</Text>
           <View>
             <View style={styles.textInputGroup}>
               <Text style={styles.label}>Group Name</Text>
@@ -163,6 +163,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     right: 0,
   },
+  headerText: {
+    fontFamily: fonts.PoppinsMedium,
+    fontSize: 17,
+    textAlign: 'center',
+    marginVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0,0,0,0.4)',
+  },
   btn: {
     width: 51,
     height: 50,
@@ -188,6 +196,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     borderColor: '#121212',
     borderWidth: 0.5,
+    fontFamily: fonts.PoppinsMedium,
+    paddingBottom: 5,
   },
   modalBtn: {
     alignItems: 'center',

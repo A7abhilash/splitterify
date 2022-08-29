@@ -55,10 +55,11 @@ export default function UserGroupItem({item, bill_id}) {
     <View style={styles.container}>
       <View style={{...styles.row}}>
         <AvatarName
-          text={item.email || item.userName + item.user_id}
-          userName={item.userName}
+          text={item.email}
+          userName={item.userName || item.guestName}
           email={item.email}
           phoneNo={item.phoneNo}
+          isGuest={!item.user_id}
         />
         <Text
           style={{
@@ -108,8 +109,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   paid_date: {
-    fontSize: 11,
-    fontStyle: 'italic',
+    fontSize: 10,
+    fontFamily: fonts.PoppinsItalic,
     color: 'rgba(0,0,0,0.6)',
   },
   btn: {

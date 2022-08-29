@@ -40,25 +40,13 @@ export default function AvatarName({text, userName, email, phoneNo, isGuest}) {
               borderTopRightRadius: 40,
             }}>
             <View>
-              {!isGuest ? (
-                <ProfileDetails
-                  user={{
-                    userName,
-                    email,
-                    phoneNo,
-                  }}
-                />
-              ) : (
-                <Text
-                  style={{
-                    ...styles.modalBtnText,
-                    color: colors.Warning,
-                    textAlign: 'center',
-                    fontSize: 20,
-                  }}>
-                  Guest User
-                </Text>
-              )}
+              <ProfileDetails
+                user={{
+                  userName,
+                  email,
+                  phoneNo,
+                }}
+              />
               <TouchableOpacity
                 onPress={closeModal}
                 style={{...styles.modalBtn}}>

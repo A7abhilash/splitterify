@@ -52,10 +52,10 @@ export default function AddGroupMembers({billGroup, fetchDetails}) {
     list.forEach(item => {
       _items.push({
         bill_id: billGroup.bill_id,
-        user_id: item.user_id ? item.user_id : null,
-        guestName: !item.user_id ? item.guestName : null,
+        user_id: item.user_id,
+        guestName: item.guestName,
         owes_to: billGroup.created_by,
-        expense: totalExpense / (list.length + 1),
+        expense: Math.trunc(totalExpense / (list.length + 1)),
       });
     });
     setExpenseList(_items);

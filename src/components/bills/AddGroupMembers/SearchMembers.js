@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
@@ -13,7 +14,7 @@ import {useMsg} from '../../../contexts/MsgContext';
 import {useAuth} from '../../../contexts/AuthContext';
 import Member from './Member';
 import ListEmptyComponent from '../../../containers/ListEmptyComponent';
-import {fonts} from '../../../styles';
+import {colors, fonts} from '../../../styles';
 
 export default function SearchMembers({list, setList}) {
   const {setToast} = useMsg();
@@ -52,6 +53,7 @@ export default function SearchMembers({list, setList}) {
   const addMember = item => {
     if (!list.includes(item) && item.user_id !== user.user_id) {
       setList(prev => [item, ...prev]);
+      setName('');
     } else {
       setToast('Member already added');
     }
@@ -74,13 +76,33 @@ export default function SearchMembers({list, setList}) {
           <Member user={item} onPress={() => addMember(item)} icon="+" />
         )}
         ListHeaderComponent={
-          <TextInput
-            value={name}
-            onChangeText={setName}
-            placeholder="Search users"
-            style={styles.textInput}
-            onSubmitEditing={searchUsers}
-          />
+          <>
+            <TextInput
+              value={name}
+              onChangeText={setName}
+              placeholder="Search users"
+              style={styles.textInput}
+              onSubmitEditing={searchUsers}
+            />
+            {name && (
+              <TouchableOpacity
+                onPress={() =>
+                  addMember({
+                    guestName: name,
+                  })
+                }>
+                <Text
+                  style={{
+                    fontFamily: fonts.PoppinsMedium,
+                    color: colors.Warning,
+                    marginBottom: 0,
+                    paddingLeft: 5,
+                  }}>
+                  Add as Guest Member
+                </Text>
+              </TouchableOpacity>
+            )}
+          </>
         }
         ListEmptyComponent={
           !loading && <ListEmptyComponent text="No users found." />
@@ -95,9 +117,9 @@ export default function SearchMembers({list, setList}) {
           <ScrollView>
             <Text style={styles.headerText}>Added members</Text>
             <View>
-              {list.map(item => (
+              {list.map((item, index) => (
                 <Member
-                  key={item.user_id}
+                  key={(item.user_id || 'USER-') + index}
                   user={item}
                   onPress={() => removeMember(item)}
                   icon="x"

@@ -58,7 +58,7 @@ export default function UsersOfGroup({bill_id, billGroup}) {
       {list?.length !== 0 ? (
         <FlatList
           data={list}
-          keyExtractor={item => item.bill_id + item.user_id}
+          keyExtractor={item => item.txn_id}
           renderItem={({item}) => (
             <UserGroupItem item={item} bill_id={bill_id} />
           )}

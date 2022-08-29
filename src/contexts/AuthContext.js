@@ -16,9 +16,10 @@ export function AuthProvider({children}) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const setGuestMode = () => {
+  const setGuestMode = async () => {
     setUser(null);
     setIsAuthenticated(false);
+    await AsyncStorage.removeItem('token');
   };
 
   const fetchUserData = async () => {
@@ -40,7 +41,6 @@ export function AuthProvider({children}) {
         }
         setToast(data.msg);
       } else {
-        await AsyncStorage.removeItem('token');
         setGuestMode();
       }
     } catch (error) {

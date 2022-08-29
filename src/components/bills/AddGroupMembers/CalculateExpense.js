@@ -11,7 +11,7 @@ export default function CalculateExpense({expenseList, list}) {
         <View>
           {expenseList.map((item, index) => (
             <Member
-              key={item.user_id}
+              key={(item.user_id || 'USER-') + index}
               user={list[index]}
               expense={item.expense}
             />
