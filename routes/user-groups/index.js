@@ -113,7 +113,7 @@ router.patch("/update/:txn_id", ensureAuth, async (req, res) => {
         result.user_id === req.user.user_id ||
         result.owes_to === req.user.user_id
       ) {
-        updateBillPayment(result.bill_id, result.user_id, (_err, results) => {
+        updateBillPayment(result.txn_id, (_err, results) => {
           if (_err) {
             console.log(_err);
             return res.status(500).json({

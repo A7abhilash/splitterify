@@ -31,12 +31,12 @@ module.exports = {
     });
   },
 
-  updateBillPayment: (bill_id, user_id, callback) => {
+  updateBillPayment: (txn_id, callback) => {
     let paid_date = `${new Date().getFullYear()}-${
       new Date().getMonth() + 1
     }-${new Date().getDate()}`;
 
-    const sql = `update user_groups set paid_date="${paid_date}", status="PAID" where bill_id="${bill_id}" AND user_id="${user_id}"`;
+    const sql = `update user_groups set paid_date="${paid_date}", status="PAID" where txn_id="${txn_id}"`;
     pool.query(sql, (err, result) => {
       if (err) {
         return callback(err);
@@ -58,7 +58,7 @@ module.exports = {
   },
 
   getBillGroupsOfUserId: (user_id, callback) => {
-    const sql = `select B.bill_id, B.name, B.expense as total_expense, B.created_date, B.created_by, U1.user_id, U1.userName, U1.phoneNo, U1.email, U2.user_id as owner_user_id, U2.userName as owner_userName, U2.phoneNo as owner_phoneNo, U2.email as owner_email, UG.status, UG.paid_date, UG.owes_to, UG.expense as amount_to_pay
+    const sql = `select B.bill_id, B.name, B.expense as total_expense, B.created_date, B.created_by, U1.user_id, U1.userName, U1.phoneNo, U1.email, U2.user_id as owner_user_id, U2.userName as owner_userName, U2.phoneNo as owner_phoneNo, U2.email as owner_email, UG.txn_id, UG.status, UG.paid_date, UG.owes_to, UG.expense as amount_to_pay
 					from user_groups UG
 					join users U1 
 					on UG.user_id=U1.user_id and UG.user_id="${user_id}"
@@ -76,7 +76,7 @@ module.exports = {
   },
 
   getBillMembersByBillId: (bill_id, callback) => {
-    const sql = `select B.bill_id, B.name, B.expense as total_expense, B.created_date, B.created_by, U1.user_id, U1.userName, U1.phoneNo, U1.email, U2.user_id as owner_user_id, U2.userName as owner_userName, U2.phoneNo as owner_phoneNo, U2.email as owner_email, UG.status, UG.paid_date, UG.owes_to, UG.expense as amount_to_pay
+    const sql = `select B.bill_id, B.name, B.expense as total_expense, B.created_date, B.created_by, U1.user_id, U1.userName, U1.phoneNo, U1.email, U2.user_id as owner_user_id, U2.userName as owner_userName, U2.phoneNo as owner_phoneNo, U2.email as owner_email, UG.txn_id, UG.status, UG.paid_date, UG.owes_to, UG.expense as amount_to_pay
 				from user_groups UG
 				join users U1 
 				on UG.user_id=U1.user_id
