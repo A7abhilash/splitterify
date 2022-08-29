@@ -104,7 +104,7 @@ router.patch("/update/:txn_id", ensureAuth, async (req, res) => {
 
       if (result.status === "PAID") {
         return res.status(500).json({
-          success: 0,
+          success: 1,
           msg: "Payment already completed!",
         });
       }

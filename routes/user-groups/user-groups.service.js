@@ -6,11 +6,22 @@ module.exports = {
     let sql = `insert into user_groups(txn_id, bill_id, user_id, guestName, owes_to, expense, paid_date, status) values`;
     data.forEach((item, index) => {
       const txn_id = shortid.generate();
-      sql += `(
+      sql += item.user_id
+        ? `(
         "${txn_id}",
         "${item.bill_id}",
         "${item.user_id}",
-        "${item.guestName}",
+        NULL,
+        "${item.owes_to}",
+        "${item.expense}",
+        NULL,
+        "PENDING"
+	    )`
+        : `(
+        "${txn_id}",
+        "${item.bill_id}",
+        NULL,
+        "${item.guestName || NULL}",
         "${item.owes_to}",
         "${item.expense}",
         NULL,
