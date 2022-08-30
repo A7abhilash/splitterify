@@ -1,7 +1,8 @@
 import React from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, StyleSheet} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../screens/Home';
+import PendingPayments from '../screens/PendingPayments';
 import History from '../screens/History';
 import Profile from '../screens/Profile';
 import icons from '../../assets/icons';
@@ -30,6 +31,23 @@ export default function HomeTabNavigator() {
               style={{
                 width: 20,
                 height: 20,
+                tintColor: focused ? colors.Primary : colors.Dark,
+              }}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Pending"
+        component={PendingPayments}
+        options={{
+          headerTitle: 'Payment Pending',
+          tabBarIcon: ({focused}) => (
+            <Image
+              source={icons.pending}
+              style={{
+                width: 23,
+                height: 23,
                 tintColor: focused ? colors.Primary : colors.Dark,
               }}
             />

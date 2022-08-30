@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useAuth} from '../contexts/AuthContext';
 import {fonts} from '../styles';
-import RenderHomeTabs from '../components/home/RenderHomeTabs';
+import MyUserGroups from '../components/home/MyUserGroups';
 
 export default function Home() {
   const {user} = useAuth();
@@ -15,7 +15,7 @@ export default function Home() {
           Split the bill among friends going on vacation/outing.
         </Text>
       </View>
-      <RenderHomeTabs />
+      <MyUserGroups />
     </View>
   );
 }
