@@ -60,8 +60,11 @@ export default function UsersOfGroup({bill_id, billGroup}) {
           data={list}
           keyExtractor={item => item.txn_id}
           renderItem={({item}) => (
-            <UserGroupItem item={item} bill_id={bill_id} />
+            <UserGroupItem item={item} billGroupName={billGroup.name} />
           )}
+          refreshing={loading}
+          onRefresh={fetchDetails}
+          refreshControl={null}
         />
       ) : billGroup?.created_by === user.user_id ? (
         <AddGroupMembers billGroup={billGroup} fetchDetails={fetchDetails} />
