@@ -6,47 +6,27 @@ import ListEmptyComponent from '../../containers/ListEmptyComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {BACKEND_URL} from '../../utils';
 import {useMsg} from '../../contexts/MsgContext';
+import {useData} from '../../contexts/DataContext';
 
 export default function ReceivedRecords() {
   const {setToast} = useMsg();
+  const {receivedRecords, fetchData, loading} = useData();
 
   const [list, setList] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const token = await AsyncStorage.getItem('token');
-      const res = await fetch(BACKEND_URL + '/user_groups/received_history', {
-        headers: new Headers({
-          Authorization: `Bearer ${token}`,
-        }),
-      });
-      const data = await res.json();
-      // console.log(data);
-      if (data.success) {
-        setList(
-          data.results
-            .sort(
-              (A, B) =>
-                new Date(A.created_date).getTime() -
-                new Date(B.created_date).getTime(),
-            )
-            .filter(item => item.status === 'PAID'),
-        );
-      } else {
-        setToast(data.msg);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (receivedRecords) {
+      setList(
+        receivedRecords
+          ?.sort(
+            (A, B) =>
+              new Date(A.created_date).getTime() -
+              new Date(B.created_date).getTime(),
+          )
+          .filter(item => item.status === 'PAID'),
+      );
+    }
+  }, [receivedRecords]);
 
   if (loading) {
     return <Loading />;

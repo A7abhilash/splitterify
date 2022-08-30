@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {colors, fonts} from '../../styles';
 import AvatarName from '../../containers/AvatarName';
@@ -51,6 +51,22 @@ export default function UserGroupItem({item, bill_id}) {
     }
   };
 
+  const handleMarkPaymentAsPaid = async () => {
+    Alert.alert(
+      'CONFIRM',
+      'Are you sure to mark payment as PAID? (IRREVERSIBLE ACTION)',
+      [
+        {
+          text: 'Cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: updatePayment,
+        },
+      ],
+    );
+  };
+
   return (
     <View style={styles.container}>
       <View style={{...styles.row}}>
@@ -81,7 +97,9 @@ export default function UserGroupItem({item, bill_id}) {
           {!isPaid &&
             (item.created_by === user?.user_id ||
               item.user_id === user?.user_id) && (
-              <TouchableOpacity style={styles.btn} onPress={updatePayment}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={handleMarkPaymentAsPaid}>
                 <Text style={styles.btnText}>Mark as PAID</Text>
               </TouchableOpacity>
             )}

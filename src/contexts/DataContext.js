@@ -18,6 +18,33 @@ export function DataProvider({children}) {
 
   const [userGroups, setUserGroups] = useState([]);
   const [billsGroupCreated, setBillsGroupCreated] = useState([]);
+  const [receivedRecords, setReceivedRecords] = useState([]);
+
+  const fetchReceivedRecords = async () => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const res = await fetch(BACKEND_URL + '/user_groups/received_history', {
+        headers: new Headers({
+          Authorization: `Bearer ${token}`,
+        }),
+      });
+      const data = await res.json();
+      // console.log(data);
+      if (data.success) {
+        setReceivedRecords(
+          data.results.sort(
+            (A, B) =>
+              new Date(A.created_date).getTime() -
+              new Date(B.created_date).getTime(),
+          ),
+        );
+      } else {
+        setToast(data.msg);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const fetchUserGroups = async () => {
     try {
@@ -81,6 +108,7 @@ export function DataProvider({children}) {
   useEffect(() => {
     if (isAuthenticated) {
       fetchData();
+      fetchReceivedRecords();
     } else {
       setLoading(false);
     }
@@ -88,7 +116,13 @@ export function DataProvider({children}) {
 
   return (
     <DataContext.Provider
-      value={{loading, userGroups, billsGroupCreated, fetchData}}>
+      value={{
+        loading,
+        userGroups,
+        billsGroupCreated,
+        fetchData,
+        receivedRecords,
+      }}>
       {children}
     </DataContext.Provider>
   );

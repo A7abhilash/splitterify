@@ -1,10 +1,11 @@
-import {FlatList, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useData} from '../../contexts/DataContext';
 import Loading from '../../containers/Loading';
 import ListItem from './ListItem';
 import CreateNewBillSplitGroup from '../bills/CreateNewBillSplitGroup';
 import ListEmptyComponent from '../../containers/ListEmptyComponent';
+import {fonts} from '../../styles';
 
 export default function MyUserGroups() {
   const {loading, userGroups, billsGroupCreated, fetchData} = useData();
@@ -35,6 +36,7 @@ export default function MyUserGroups() {
           item.bill_id + item.user_id + item.owes_to + item.guestName + index
         }
         renderItem={({item}) => <ListItem item={item} scene="MY_USER_GROUPS" />}
+        ListHeaderComponent={<Text style={styles.headerText}>My Groups</Text>}
         ListEmptyComponent={<ListEmptyComponent text="No groups found..." />}
         refreshing={loading}
         onRefresh={fetchData}
@@ -44,3 +46,14 @@ export default function MyUserGroups() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  headerText: {
+    fontFamily: fonts.PoppinsMedium,
+    fontSize: 17,
+    textAlign: 'center',
+    marginVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0,0,0,0.4)',
+  },
+});
