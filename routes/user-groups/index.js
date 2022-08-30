@@ -19,7 +19,7 @@ router.get("/groups_of_user", ensureAuth, async (req, res) => {
         console.log(err);
         return res.status(500).json({
           success: 0,
-          msg: err.sqlMessage,
+          msg: "Something went wrong. Please try again later!",
         });
       }
 
@@ -44,7 +44,7 @@ router.get("/received_history", ensureAuth, async (req, res) => {
         console.log(err);
         return res.status(500).json({
           success: 0,
-          msg: err.sqlMessage,
+          msg: "Something went wrong. Please try again later!",
         });
       }
 
@@ -69,7 +69,7 @@ router.get("/:bill_id", ensureAuth, async (req, res) => {
         console.log(err);
         return res.status(500).json({
           success: 0,
-          msg: err.sqlMessage,
+          msg: "Something went wrong. Please try again later!",
         });
       }
 
@@ -94,7 +94,7 @@ router.post("/create", ensureAuth, async (req, res) => {
         console.log(_err);
         return res.status(500).json({
           success: 0,
-          msg: err.sqlMessage,
+          msg: "Something went wrong. Please try again later!",
         });
       }
 
@@ -110,7 +110,7 @@ router.post("/create", ensureAuth, async (req, res) => {
           console.log(err);
           return res.status(500).json({
             success: 0,
-            msg: err.sqlMessage,
+            msg: "Something went wrong. Please try again later!",
           });
         }
 
@@ -135,7 +135,7 @@ router.patch("/update/:txn_id", ensureAuth, async (req, res) => {
         console.log(err);
         return res.status(500).json({
           success: 0,
-          msg: err.sqlMessage,
+          msg: "Something went wrong. Please try again later!",
         });
       }
 
@@ -162,7 +162,7 @@ router.patch("/update/:txn_id", ensureAuth, async (req, res) => {
             console.log(_err);
             return res.status(500).json({
               success: 0,
-              msg: _err.sqlMessage,
+              msg: _"Something went wrong. Please try again later!",
             });
           }
 

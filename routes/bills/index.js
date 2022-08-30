@@ -15,7 +15,7 @@ router.get("/", ensureAuth, async (req, res) => {
         console.log(err);
         return res.status(500).json({
           success: 0,
-          msg: err.sqlMessage,
+          msg: "Something went wrong. Please try again later!",
         });
       }
 
@@ -40,7 +40,7 @@ router.get("/:bill_id", ensureAuth, async (req, res) => {
         console.log(err);
         return res.status(500).json({
           success: 0,
-          msg: err.sqlMessage,
+          msg: "Something went wrong. Please try again later!",
         });
       }
 
@@ -73,7 +73,7 @@ router.post("/create", ensureAuth, async (req, res) => {
         console.log(err);
         return res.status(500).json({
           success: 0,
-          msg: err.sqlMessage,
+          msg: "Something went wrong. Please try again later!",
         });
       }
 

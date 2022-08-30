@@ -25,7 +25,7 @@ router.post("/signUp", (req, res) => {
         console.log(err);
         return res.status(500).json({
           success: 0,
-          msg: err.sqlMessage,
+          msg: "Failed to sign up. Please try again later!",
         });
       }
       return res.status(200).json({
@@ -49,7 +49,7 @@ router.post("/signIn", (req, res) => {
         console.log(err);
         return res.status(500).json({
           success: 0,
-          msg: "DB Connection error",
+          msg: "Failed to sign in. Please try again later!",
         });
       }
 
@@ -90,7 +90,7 @@ router.post("/signIn", (req, res) => {
 router.patch("/user/", ensureAuth, (req, res) => {
   // console.log(req.body);
   try {
-    const user_id = req.params.user_id;
+    const user_id = req.user.user_id;
 
     const body = req.body;
     const salt = genSaltSync(10);

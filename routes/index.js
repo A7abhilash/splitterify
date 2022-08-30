@@ -35,7 +35,8 @@ router.get("/create-table/users", (req, res) => {
     const sql = `create table users (
 		user_id VARCHAR(45) PRIMARY KEY,
 		userName VARCHAR(100),
-    phoneNo INT(10),
+    phoneNo INT(15),
+		vpa VARCHAR(45),
 		email VARCHAR(45) UNIQUE NOT NULL,
 		password VARCHAR(100)
 		)`;

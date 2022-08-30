@@ -18,10 +18,10 @@ module.exports = {
   },
 
   updateUser: (data, user_id, callback) => {
-    const sql = `update users set userName=?, phoneNo=?, email=?, password=? where user_id="${user_id}"`;
+    const sql = `update users set userName=?, phoneNo=?, vpa=?, email=?, password=? where user_id="${user_id}"`;
     pool.query(
       sql,
-      [data.userName, data.phoneNo, data.email, data.password],
+      [data.userName, data.phoneNo, data.vpa, data.email, data.password],
       (err, result) => {
         if (err) {
           return callback(err);
