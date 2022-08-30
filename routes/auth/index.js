@@ -64,7 +64,7 @@ router.post("/signIn", (req, res) => {
         delete result.password;
 
         const jwt = sign({ result }, process.env.JWT_KEY, {
-          expiresIn: "3h",
+          expiresIn: "7d",
         });
 
         return res.status(200).json({
