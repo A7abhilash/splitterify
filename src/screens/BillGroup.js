@@ -36,7 +36,8 @@ export default function BillGroup() {
             setToast(data.msg);
           }
         } catch (error) {
-          console.log(error);
+          // console.log(error);
+      setToast("Something went wrong. Please try again later!");
         } finally {
           setLoading(false);
         }

@@ -38,7 +38,8 @@ export default function AddGroupMembers({billGroup, fetchDetails}) {
       }
       setToast(data.msg);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      setToast("Failed to add group members. Please try again!");
     } finally {
       setLoading(false);
     }

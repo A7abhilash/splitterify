@@ -7,6 +7,7 @@ import {
   View,
   Switch,
   Keyboard,
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -14,13 +15,22 @@ import {colors, fonts} from '../../styles';
 import {useMsg} from '../../contexts/MsgContext';
 import {BACKEND_URL} from '../../utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useAuth} from '../../contexts/AuthContext';
 
 export default function CreateNewBillSplitGroup() {
+  const {user} = useAuth();
   const {setAlert, setToast} = useMsg();
 
   const [visible, setVisible] = useState(false);
 
-  const openModal = () => setVisible(true);
+  const openModal = () => {
+    if (!user.vpa) {
+      setToast(
+        'Do set your Virtual Payment Address in your profile to receive payments via UPI!',
+      );
+    }
+    setVisible(true);
+  };
   const closeModal = () => {
     setInitialData();
     setVisible(false);
@@ -77,7 +87,8 @@ export default function CreateNewBillSplitGroup() {
         });
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      setToast("Failed to create new Bill Split Group. Please try again!");
     }
   };
 

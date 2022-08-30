@@ -44,7 +44,8 @@ export default function SearchMembers({list, setList}) {
         setToast(data.msg);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      setToast("Failed to search users. Please try again!");
     } finally {
       setLoading(false);
     }

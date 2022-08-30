@@ -20,13 +20,14 @@ const SignUp = () => {
   const [phoneNo, setPhoneNo] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [vpa, setVpa] = useState('')
 
   const navigation = useNavigation();
 
   const handlePress = async () => {
-    if (userName && email && password && phoneNo) {
+    if (userName.trim() && email.trim() && password.trim() && phoneNo.trim() && vpa.trim()) {
       Keyboard.dismiss();
-      await signUp(userName, email, password, phoneNo);
+      await signUp(userName, email, password, phoneNo, vpa);
     } else {
       setAlert({
         title: 'Invalid',
@@ -51,6 +52,12 @@ const SignUp = () => {
             keyboardType="phone-pad"
             value={phoneNo}
             onChangeText={text => setPhoneNo(text)}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder="Virtual Payment Address"
+            value={vpa}
+            onChangeText={text => setVpa(text)}
             style={styles.input}
           />
           <TextInput

@@ -1,4 +1,11 @@
-import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Alert,
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {colors, fonts} from '../../styles';
 import AvatarName from '../../containers/AvatarName';
@@ -7,7 +14,7 @@ import {BACKEND_URL} from '../../utils';
 import {useMsg} from '../../contexts/MsgContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default function UserGroupItem({item, bill_id}) {
+export default function UserGroupItem({item, billGroupName}) {
   const {setToast} = useMsg();
   const {user} = useAuth();
 
@@ -44,14 +51,14 @@ export default function UserGroupItem({item, bill_id}) {
       }
       setToast(data.msg);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       setToast('Failed to mark as PAID!');
       setIsPaid(false);
       setPaidDate(null);
     }
   };
 
-  const handleMarkPaymentAsPaid = async () => {
+  const handleMarkPaymentAsPaid = () => {
     Alert.alert(
       'CONFIRM',
       'Are you sure to mark payment as PAID? (IRREVERSIBLE ACTION)',
@@ -62,6 +69,35 @@ export default function UserGroupItem({item, bill_id}) {
         {
           text: 'Yes',
           onPress: updatePayment,
+        },
+      ],
+    );
+  };
+
+  const openUpi = async () => {
+    const vpa = user.vpa;
+    const payeeName = user.userName;
+
+    const transactionNote = `Payment from Splitterify for Bill Split Group: ${billGroupName}`;
+    // const amount= item.amount_to_pay
+    const amount = '10';
+
+    await Linking.openURL(
+      `upi://pay?pa=${vpa}&pn=${payeeName}&tn=${transactionNote}&am=${amount}&mc=0000&mode=02&purpose=00&cu=INR&tr=some-random-id-123`,
+    );
+  };
+
+  const handleOpenUpi = () => {
+    Alert.alert(
+      'CONFIRM',
+      'You are suppose to mark your payment as PAID manually once you send the amount via your preferred UPI.',
+      [
+        {
+          text: 'Cancel',
+        },
+        {
+          text: 'Pay',
+          onPress: openUpi,
         },
       ],
     );
@@ -94,15 +130,23 @@ export default function UserGroupItem({item, bill_id}) {
           )}
         </View>
         <View>
-          {!isPaid &&
-            (item.created_by === user?.user_id ||
-              item.user_id === user?.user_id) && (
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={handleMarkPaymentAsPaid}>
-                <Text style={styles.btnText}>Mark as PAID</Text>
-              </TouchableOpacity>
-            )}
+          {!isPaid && (
+            <View style={{flexDirection: 'row'}}>
+              {(item.created_by === user?.user_id ||
+                item.user_id === user?.user_id) && (
+                <TouchableOpacity
+                  style={styles.btn}
+                  onPress={handleMarkPaymentAsPaid}>
+                  <Text style={styles.btnText}>Mark as PAID</Text>
+                </TouchableOpacity>
+              )}
+              {item.user_id === user?.user_id && (
+                <TouchableOpacity style={styles.btn} onPress={handleOpenUpi}>
+                  <Text style={styles.btnText}>Pay via UPI</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
         </View>
       </View>
     </View>
@@ -136,6 +180,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 5,
     paddingTop: 2,
+    marginHorizontal: 4,
   },
   btnText: {
     fontFamily: fonts.PoppinsMedium,

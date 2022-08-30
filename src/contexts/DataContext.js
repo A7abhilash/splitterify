@@ -42,7 +42,8 @@ export function DataProvider({children}) {
         setToast(data.msg);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      setToast("Something went wrong. Please try again later!");
     }
   };
 
@@ -68,7 +69,8 @@ export function DataProvider({children}) {
         setToast(data.msg);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      setToast("Failed to fetch data. Please try again");
     }
   };
 
@@ -94,7 +96,8 @@ export function DataProvider({children}) {
         setToast(data.msg);
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      setToast("Failed to fetch data. Please try again");
     }
   };
 

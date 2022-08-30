@@ -44,7 +44,8 @@ export function AuthProvider({children}) {
         setGuestMode();
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      setToast("Something went wrong. Please try logging in again later!");
       setGuestMode();
     } finally {
       setLoading(false);
@@ -83,8 +84,8 @@ export function AuthProvider({children}) {
         }
       })
       .catch(err => {
-        console.log(err);
-        setToast('123Server Error, Please try later...');
+        // console.log(err);
+      setToast("Something went wrong. Please try again later!");
       });
   };
 
@@ -109,8 +110,8 @@ export function AuthProvider({children}) {
         }
       })
       .catch(err => {
-        console.log(err);
-        setToast('Server Error, Please try later...');
+        // console.log(err);
+      setToast("Something went wrong. Please try again later!");
       });
   };
 

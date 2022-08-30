@@ -29,6 +29,12 @@ export default function ProfileDetails({user}) {
             <Text style={styles.textInput}>{user.phoneNo}</Text>
           </View>
         )}
+        {user.vpa && (
+          <View style={styles.textInputGroup}>
+            <Text style={styles.label}>Virtual Payment Address</Text>
+            <Text style={styles.textInput}>{user.vpa}</Text>
+          </View>
+        )}
       </View>
     </View>
   );
