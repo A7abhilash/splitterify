@@ -41,14 +41,28 @@ export default function ListItem({item, scene, show_status = false}) {
             <Text style={styles.label}>{label1[scene]}</Text>
             <AvatarName
               text={
-                item?.owner_email ||
-                item?.owner_userName + item?.owner_user_id ||
-                item?.email ||
-                item?.userName + item?.user_id
+                scene === 'RECEIVED_HISTORY'
+                  ? item?.userName || item?.guestName
+                  : item?.owner_email ||
+                    item?.owner_userName + item?.owner_user_id ||
+                    item?.email ||
+                    item?.userName + item?.user_id
               }
-              userName={item?.owner_userName || item?.userName}
-              email={item?.owner_email || item?.email}
-              phoneNo={item?.owner_phoneNo}
+              userName={
+                scene === 'RECEIVED_HISTORY'
+                  ? item?.userName || item?.guestName
+                  : item?.owner_userName || item?.userName
+              }
+              email={
+                scene === 'RECEIVED_HISTORY'
+                  ? item?.email
+                  : item?.owner_email || item?.email
+              }
+              phoneNo={
+                scene === 'RECEIVED_HISTORY'
+                  ? item?.phoneNo
+                  : item?.owner_phoneNo
+              }
             />
           </View>
           <View>

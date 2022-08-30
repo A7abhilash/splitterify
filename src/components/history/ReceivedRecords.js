@@ -26,11 +26,13 @@ export default function ReceivedRecords() {
       // console.log(data);
       if (data.success) {
         setList(
-          data.results.sort(
-            (A, B) =>
-              new Date(A.created_date).getTime() -
-              new Date(B.created_date).getTime(),
-          ),
+          data.results
+            .sort(
+              (A, B) =>
+                new Date(A.created_date).getTime() -
+                new Date(B.created_date).getTime(),
+            )
+            .filter(item => item.status === 'PAID'),
         );
       } else {
         setToast(data.msg);
