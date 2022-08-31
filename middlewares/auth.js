@@ -29,7 +29,7 @@ module.exports = {
           console.log(_err);
           return res.status(400).json({
             success: 0,
-            msg: "DB Connection error!",
+            msg: "Something went wrong. Please try again later!",
           });
         }
 

@@ -90,25 +90,60 @@ router.post("/signIn", (req, res) => {
 router.patch("/user/", ensureAuth, (req, res) => {
   // console.log(req.body);
   try {
-    const user_id = req.user.user_id;
-
-    const body = req.body;
-    const salt = genSaltSync(10);
-    body.password = hashSync(body.password, salt);
-
-    updateUser(body, user_id, (err, result) => {
+    getUserByEmail(req.user.email, (err, result) => {
       if (err) {
         console.log(err);
         return res.status(500).json({
           success: 0,
-          msg: "Failed to update user",
+          msg: "Failed to save changes. Please try again later!",
         });
       }
 
-      return res.status(200).json({
-        success: 1,
-        msg: "User updated",
-      });
+      if (!result) {
+        return res.status(404).json({
+          success: 0,
+          msg: "Invalid credentials",
+        });
+      }
+
+      if (compareSync(req.body.currentPassword, result.password)) {
+        const salt = genSaltSync(10);
+        const data = {
+          user_id: req.user.user_id,
+          userName: req.body.userName,
+          email: req.body.email,
+          phoneNo: req.body.phoneNo,
+          vpa: req.body.vpa,
+          password: hashSync(req.body.password, salt),
+        };
+
+        updateUser(data, req.user.user_id, (_err, _result) => {
+          if (_err) {
+            console.log(err);
+            return res.status(500).json({
+              success: 0,
+              msg: "Failed to update user",
+            });
+          }
+
+          delete data.password;
+          const jwt = sign({ data }, process.env.JWT_KEY, {
+            expiresIn: "7d",
+          });
+
+          return res.status(200).json({
+            success: 1,
+            msg: "Successfully saved changes!",
+            token: jwt,
+            user: data,
+          });
+        });
+      } else {
+        return res.status(404).json({
+          success: 0,
+          msg: "Invalid credentials",
+        });
+      }
     });
   } catch (error) {
     console.log(error);
