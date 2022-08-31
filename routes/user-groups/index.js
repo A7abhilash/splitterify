@@ -162,7 +162,7 @@ router.patch("/update/:txn_id", ensureAuth, async (req, res) => {
             console.log(_err);
             return res.status(500).json({
               success: 0,
-              msg: _"Something went wrong. Please try again later!",
+              msg: "Something went wrong. Please try again later!",
             });
           }
 
