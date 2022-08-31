@@ -45,7 +45,7 @@ export function AuthProvider({children}) {
       }
     } catch (error) {
       // console.log(error);
-      setToast("Something went wrong. Please try logging in again later!");
+      setToast('Something went wrong. Please try logging in again later!');
       setGuestMode();
     } finally {
       setLoading(false);
@@ -85,7 +85,7 @@ export function AuthProvider({children}) {
       })
       .catch(err => {
         // console.log(err);
-      setToast("Something went wrong. Please try again later!");
+        setToast('Something went wrong. Please try again later!');
       });
   };
 
@@ -111,7 +111,7 @@ export function AuthProvider({children}) {
       })
       .catch(err => {
         // console.log(err);
-      setToast("Something went wrong. Please try again later!");
+        setToast('Something went wrong. Please try again later!');
       });
   };
 
@@ -155,8 +155,9 @@ export function AuthProvider({children}) {
   return (
     <AuthContext.Provider
       value={{
-        user,
         loading,
+        user,
+        setUser,
         setIsAuthenticated,
         isAuthenticated,
         signIn,

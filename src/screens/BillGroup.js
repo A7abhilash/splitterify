@@ -37,7 +37,7 @@ export default function BillGroup() {
           }
         } catch (error) {
           // console.log(error);
-      setToast("Something went wrong. Please try again later!");
+          setToast('Something went wrong. Please try again later!');
         } finally {
           setLoading(false);
         }

@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {colors, fonts} from '../styles';
+import {fonts} from '../styles';
 import IdenticonAvatar from './IdenticonAvatar';
 
 export default function ProfileDetails({user}) {
@@ -41,10 +41,6 @@ export default function ProfileDetails({user}) {
 }
 
 const styles = StyleSheet.create({
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
   textInputGroup: {
     marginVertical: 5,
   },

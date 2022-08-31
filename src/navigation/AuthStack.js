@@ -4,6 +4,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeTabNavigator from './HomeTabNavigator';
 import BillGroup from '../screens/BillGroup';
 import {fonts} from '../styles';
+import UpdateProfile from '../screens/UpdateProfile';
 
 export default function AuthStack() {
   const Stack = createNativeStackNavigator();
@@ -27,6 +28,13 @@ export default function AuthStack() {
         component={BillGroup}
         options={{
           headerTitle: 'Group Details',
+        }}
+      />
+      <Stack.Screen
+        name="UpdateProfile"
+        component={UpdateProfile}
+        options={{
+          headerTitle: 'Profile Settings',
         }}
       />
     </Stack.Navigator>
