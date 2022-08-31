@@ -9,9 +9,13 @@ import {
   Text,
   View,
   TouchableOpacity,
+  ScrollView,
+  Image,
 } from 'react-native';
 import {useAuth} from '../contexts/AuthContext';
 import {useMsg} from '../contexts/MsgContext';
+import {colors, fonts} from '../styles';
+import icons from '../../assets/icons';
 
 const SignUp = () => {
   const {setAlert} = useMsg();
@@ -20,12 +24,18 @@ const SignUp = () => {
   const [phoneNo, setPhoneNo] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [vpa, setVpa] = useState('')
+  const [vpa, setVpa] = useState('');
 
   const navigation = useNavigation();
 
   const handlePress = async () => {
-    if (userName.trim() && email.trim() && password.trim() && phoneNo.trim() && vpa.trim()) {
+    if (
+      userName.trim() &&
+      email.trim() &&
+      password.trim() &&
+      phoneNo.trim() &&
+      vpa.trim()
+    ) {
       Keyboard.dismiss();
       await signUp(userName, email, password, phoneNo, vpa);
     } else {
@@ -38,58 +48,90 @@ const SignUp = () => {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
-        <Text style={styles.title}>Sign Up</Text>
-        <View>
-          <TextInput
-            placeholder="Username"
-            value={userName}
-            onChangeText={text => setUserName(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Phone Number"
-            keyboardType="phone-pad"
-            value={phoneNo}
-            onChangeText={text => setPhoneNo(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Virtual Payment Address"
-            value={vpa}
-            onChangeText={text => setVpa(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Email"
-            keyboardType="email-address"
-            value={email}
-            onChangeText={text => setEmail(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={text => setPassword(text)}
-            style={styles.input}
-            secureTextEntry
+      <ScrollView
+        contentContainerStyle={{
+          flex: 1,
+          justifyContent: 'center',
+        }}>
+        <View
+          style={{
+            marginBottom: 15,
+            alignItems: 'center',
+          }}>
+          <Image
+            source={icons.welcome}
+            style={{
+              width: 150,
+              height: 150,
+            }}
           />
         </View>
         <View>
-          <Button
-            mode="contained"
-            onPress={handlePress}
-            style={styles.btn}
-            title="Sign Up"
-          />
+          <View style={styles.textInputGroup}>
+            <Text style={styles.label}>User Name</Text>
+            <TextInput
+              placeholder="Enter your user name"
+              value={userName}
+              onChangeText={text => setUserName(text)}
+              style={styles.textInput}
+            />
+            <View style={styles.textInputGroup}>
+              <Text style={styles.label}>Phone Number</Text>
+              <TextInput
+                placeholder="Enter your phone number"
+                keyboardType="phone-pad"
+                value={phoneNo}
+                onChangeText={text => setPhoneNo(text)}
+                style={styles.textInput}
+              />
+            </View>
+            <View style={styles.textInputGroup}>
+              <Text style={styles.label}>Virtual Payment Address</Text>
+              <TextInput
+                placeholder="Enter your VPA"
+                value={vpa}
+                onChangeText={text => setVpa(text)}
+                style={styles.textInput}
+              />
+            </View>
+            <View style={styles.textInputGroup}>
+              <Text style={styles.label}>Email</Text>
+              <TextInput
+                placeholder="Enter your email address"
+                keyboardType="email-address"
+                value={email}
+                onChangeText={text => setEmail(text)}
+                style={styles.textInput}
+              />
+            </View>
+            <View style={styles.textInputGroup}>
+              <Text style={styles.label}>New Password</Text>
+              <TextInput
+                placeholder="Enter new password"
+                value={password}
+                onChangeText={text => setPassword(text)}
+                style={styles.textInput}
+                secureTextEntry
+              />
+            </View>
+          </View>
+          <View>
+            <View>
+              <TouchableOpacity onPress={handlePress} style={styles.btn}>
+                <Text style={styles.btnText}>SIGN UP</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-      </View>
-      <View style={{alignItems: 'center', marginTop: 20}}>
-        <Text>Already have an account?</Text>
-        <TouchableOpacity onPress={() => navigation.replace('SignIn')}>
-          <Text>Sign In</Text>
-        </TouchableOpacity>
-      </View>
+        <View style={styles.bottomView}>
+          <Text style={styles.label}>Already have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.replace('SignIn')}>
+            <Text style={{...styles.label, color: colors.Primary}}>
+              Sign In
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -99,24 +141,45 @@ export default SignUp;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    marginHorizontal: 20,
+    padding: 20,
+    backgroundColor: colors.Light,
   },
-  card: {
-    paddingVertical: 20,
-  },
-  title: {
-    color: 'purple',
-    fontSize: 25,
-    textAlign: 'center',
-  },
-  btn: {
-    flex: 1,
-  },
-  input: {
+  textInputGroup: {
     marginVertical: 5,
+  },
+  label: {
+    fontFamily: fonts.PoppinsLight,
+    fontSize: 10,
+  },
+  textInput: {
+    marginVertical: 5,
+    paddingHorizontal: 5,
+    paddingTop: 10,
+    paddingBottom: 5,
     borderRadius: 5,
     borderColor: '#121212',
     borderWidth: 0.5,
+    fontFamily: fonts.PoppinsMedium,
+  },
+  btn: {
+    backgroundColor: colors.Primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 5,
+    borderRadius: 10,
+    paddingVertical: 5,
+    width: '40%',
+    alignSelf: 'center',
+  },
+  btnText: {
+    fontFamily: fonts.PoppinsMedium,
+    color: colors.Light,
+  },
+  bottomView: {
+    alignItems: 'center',
+    marginTop: 20,
+    borderTopWidth: 0.5,
+    borderTopColor: 'rbga(0,0,0,0.4)',
+    paddingTop: 10,
   },
 });

@@ -9,9 +9,13 @@ import {
   View,
   TouchableOpacity,
   Keyboard,
+  ScrollView,
+  Image,
 } from 'react-native';
+import icons from '../../assets/icons';
 import {useAuth} from '../contexts/AuthContext';
 import {useMsg} from '../contexts/MsgContext';
+import {colors, fonts} from '../styles';
 
 const SignIn = () => {
   const {setAlert} = useMsg();
@@ -37,40 +41,60 @@ const SignIn = () => {
   };
   return (
     <View style={styles.container}>
-      <View style={styles.card}>
-        {/* <Card.Title title="Welcome User" subtitle="Card Subtitle" /> */}
-        <Text style={styles.title}>Sign In</Text>
-        <View>
-          <TextInput
-            placeholder="Email"
-            keyboardType="email-address"
-            value={email}
-            onChangeText={text => setEmail(text)}
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Password"
-            value={password}
-            onChangeText={text => setPassword(text)}
-            style={styles.input}
-            secureTextEntry
-          />
-        </View>
-        <View>
-          <Button
-            mode="contained"
-            onPress={handlePress}
-            style={styles.btn}
-            title="Sign In"
+      <ScrollView
+        contentContainerStyle={{
+          flex: 1,
+          justifyContent: 'center',
+        }}>
+        <View
+          style={{
+            marginBottom: 15,
+            alignItems: 'center',
+          }}>
+          <Image
+            source={icons.hello}
+            style={{
+              width: 150,
+              height: 150,
+            }}
           />
         </View>
-      </View>
-      <View style={{alignItems: 'center', marginTop: 20}}>
-        <Text>Don't have an account?</Text>
-        <TouchableOpacity onPress={() => navigation.replace('SignUp')}>
-          <Text>Sign Up</Text>
-        </TouchableOpacity>
-      </View>
+        <View>
+          <View style={styles.textInputGroup}>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              placeholder="Enter your email address"
+              keyboardType="email-address"
+              value={email}
+              onChangeText={text => setEmail(text)}
+              style={styles.textInput}
+            />
+          </View>
+          <View style={styles.textInputGroup}>
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              placeholder="Enter password"
+              value={password}
+              onChangeText={text => setPassword(text)}
+              style={styles.textInput}
+              secureTextEntry
+            />
+          </View>
+        </View>
+        <View>
+          <TouchableOpacity onPress={handlePress} style={styles.btn}>
+            <Text style={styles.btnText}>SIGN IN</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.bottomView}>
+          <Text style={styles.label}>Don't have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.replace('SignUp')}>
+            <Text style={{...styles.label, color: colors.Primary}}>
+              Sign Up
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -80,24 +104,46 @@ export default SignIn;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 20,
+    backgroundColor: colors.Light,
     justifyContent: 'center',
-    marginHorizontal: 20,
   },
-  card: {
-    paddingVertical: 20,
-  },
-  title: {
-    color: 'purple',
-    fontSize: 25,
-    textAlign: 'center',
-  },
-  btn: {
-    flex: 1,
-  },
-  input: {
+  textInputGroup: {
     marginVertical: 5,
+  },
+  label: {
+    fontFamily: fonts.PoppinsLight,
+    fontSize: 10,
+  },
+  textInput: {
+    marginVertical: 5,
+    paddingHorizontal: 5,
+    paddingTop: 10,
+    paddingBottom: 5,
     borderRadius: 5,
     borderColor: '#121212',
     borderWidth: 0.5,
+    fontFamily: fonts.PoppinsMedium,
+  },
+  btn: {
+    backgroundColor: colors.Primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 5,
+    borderRadius: 10,
+    paddingVertical: 5,
+    width: '40%',
+    alignSelf: 'center',
+  },
+  btnText: {
+    fontFamily: fonts.PoppinsMedium,
+    color: colors.Light,
+  },
+  bottomView: {
+    alignItems: 'center',
+    marginTop: 20,
+    borderTopWidth: 0.5,
+    borderTopColor: 'rbga(0,0,0,0.4)',
+    paddingTop: 10,
   },
 });
