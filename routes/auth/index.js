@@ -87,8 +87,8 @@ router.post("/signIn", (req, res) => {
 
 // PATCH /auth/user
 // Update an user details
-router.patch("/user/", ensureAuth, (req, res) => {
-  // console.log(req.body);
+router.patch("/user", ensureAuth, (req, res) => {
+  console.log(req.body);
   try {
     getUserByEmail(req.user.email, (err, result) => {
       if (err) {
