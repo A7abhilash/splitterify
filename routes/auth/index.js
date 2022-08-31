@@ -127,7 +127,7 @@ router.patch("/user", ensureAuth, (req, res) => {
           }
 
           delete data.password;
-          const jwt = sign({ data }, process.env.JWT_KEY, {
+          const jwt = sign({ result: data }, process.env.JWT_KEY, {
             expiresIn: "7d",
           });
 
