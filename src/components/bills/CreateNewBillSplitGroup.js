@@ -24,11 +24,6 @@ export default function CreateNewBillSplitGroup() {
   const [visible, setVisible] = useState(false);
 
   const openModal = () => {
-    if (!user.vpa) {
-      setToast(
-        'Do set your Virtual Payment Address in your profile to receive payments via UPI!',
-      );
-    }
     setVisible(true);
   };
   const closeModal = () => {
@@ -61,7 +56,8 @@ export default function CreateNewBillSplitGroup() {
         const newGroup = {
           name,
           expense,
-          type: switchOn ? 'SPLIT_INDIVIDUALLY' : 'SPLIT_EQUALLY',
+          // type: switchOn ? 'SPLIT_INDIVIDUALLY' : 'SPLIT_EQUALLY',
+          type: 'SPLIT_INDIVIDUALLY',
         };
 
         const token = await AsyncStorage.getItem('token');
@@ -88,7 +84,7 @@ export default function CreateNewBillSplitGroup() {
       }
     } catch (error) {
       // console.log(error);
-      setToast("Failed to create new Bill Split Group. Please try again!");
+      setToast('Failed to create new Bill Split Group. Please try again!');
     }
   };
 
@@ -122,7 +118,7 @@ export default function CreateNewBillSplitGroup() {
                 onChangeText={setExpense}
               />
             </View>
-            <View
+            {/* <View
               style={{
                 ...styles.textInputGroup,
               }}>
@@ -141,7 +137,13 @@ export default function CreateNewBillSplitGroup() {
               <Text style={styles.label}>
                 (*By Default, the bill will be split EQUALLY)
               </Text>
-            </View>
+            </View> */}
+            {!user.vpa && (
+              <Text style={{...styles.label, color: colors.Danger}}>
+                Do set your Virtual Payment Address in your profile to receive
+                payments via UPI!
+              </Text>
+            )}
           </View>
           <TouchableOpacity
             onPress={handleCreate}

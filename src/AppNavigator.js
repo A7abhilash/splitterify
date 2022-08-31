@@ -5,11 +5,11 @@ import GuestStack from './navigation/GuestStack';
 import AuthStack from './navigation/AuthStack';
 
 export default function AppNavigator() {
-  const {isAuthenticated} = useAuth();
+  const {isAuthenticated, user} = useAuth();
 
   return (
     <NavigationContainer>
-      {!isAuthenticated ? <GuestStack /> : <AuthStack />}
+      {isAuthenticated && user !== null ? <AuthStack /> : <GuestStack />}
     </NavigationContainer>
   );
 }

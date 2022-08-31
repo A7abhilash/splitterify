@@ -14,7 +14,6 @@ export default function PendingPayments() {
   ]);
 
   const renderScene = ({route}) => {
-    console.log(route);
     switch (route.key) {
       case 'send':
         return <ToPay />;

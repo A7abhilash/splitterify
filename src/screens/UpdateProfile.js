@@ -1,4 +1,5 @@
 import {
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -29,6 +30,9 @@ export default function UpdateProfile() {
     setEmail(user?.email || '');
     setPhoneNo(user?.phoneNo.toString() || '');
     setVpa(user?.vpa || '');
+
+    setCurrentPassword('');
+    setNewPassword('');
   };
 
   useEffect(() => {
@@ -71,6 +75,8 @@ export default function UpdateProfile() {
         // console.log('NEW USER: ', data.user);
         setUser(data.user);
         await AsyncStorage.setItem('token', data.token);
+        setCurrentPassword('');
+        setNewPassword('');
       }
       setToast(data.msg);
     } catch (error) {
@@ -81,88 +87,91 @@ export default function UpdateProfile() {
 
   return (
     <View style={styles.container}>
-      <View style={styles.textInputGroup}>
-        <Text style={styles.label}>User Name</Text>
-        <TextInput
-          placeholder="Enter your user name"
-          value={userName}
-          onChangeText={setUserName}
-          style={styles.textInput}
-        />
-      </View>
-      <View style={styles.textInputGroup}>
-        <Text style={styles.label}>Email</Text>
-        <TextInput
-          placeholder="Enter your email address"
-          value={email}
-          onChangeText={setEmail}
-          style={styles.textInput}
-        />
-      </View>
-      <View style={styles.textInputGroup}>
-        <Text style={styles.label}>Phone Number</Text>
-        <TextInput
-          placeholder="Enter your phone number"
-          keyboardType="number-pad"
-          value={phoneNo}
-          onChangeText={setPhoneNo}
-          style={styles.textInput}
-        />
-      </View>
-      <View style={styles.textInputGroup}>
-        <Text style={styles.label}>Virtual Payment Address</Text>
-        <TextInput
-          placeholder="Enter your VPA"
-          value={vpa}
-          onChangeText={setVpa}
-          style={styles.textInput}
-        />
-      </View>
-      <View style={styles.textInputGroup}>
-        <Text style={styles.label}>Current Password</Text>
-        <TextInput
-          placeholder="Enter current password (Required)"
-          value={currentPassword}
-          onChangeText={setCurrentPassword}
-          style={styles.textInput}
-          secureTextEntry
-        />
-      </View>
-      <View style={styles.textInputGroup}>
-        <Text style={styles.label}>New Password</Text>
-        <TextInput
-          placeholder="Enter new password"
-          value={newPassword}
-          onChangeText={setNewPassword}
-          style={styles.textInput}
-          secureTextEntry
-        />
-        <Text
+      <ScrollView>
+        <View style={styles.textInputGroup}>
+          <Text style={styles.label}>User Name</Text>
+          <TextInput
+            placeholder="Enter your user name"
+            value={userName}
+            onChangeText={setUserName}
+            style={styles.textInput}
+          />
+        </View>
+        <View style={styles.textInputGroup}>
+          <Text style={styles.label}>Email</Text>
+          <TextInput
+            placeholder="Enter your email address"
+            keyboardType="email-address"
+            value={email}
+            onChangeText={setEmail}
+            style={styles.textInput}
+          />
+        </View>
+        <View style={styles.textInputGroup}>
+          <Text style={styles.label}>Phone Number</Text>
+          <TextInput
+            placeholder="Enter your phone number"
+            keyboardType="number-pad"
+            value={phoneNo}
+            onChangeText={setPhoneNo}
+            style={styles.textInput}
+          />
+        </View>
+        <View style={styles.textInputGroup}>
+          <Text style={styles.label}>Virtual Payment Address</Text>
+          <TextInput
+            placeholder="Enter your VPA"
+            value={vpa}
+            onChangeText={setVpa}
+            style={styles.textInput}
+          />
+        </View>
+        <View style={styles.textInputGroup}>
+          <Text style={styles.label}>Current Password</Text>
+          <TextInput
+            placeholder="Enter current password (Required)"
+            value={currentPassword}
+            onChangeText={setCurrentPassword}
+            style={styles.textInput}
+            secureTextEntry
+          />
+        </View>
+        <View style={styles.textInputGroup}>
+          <Text style={styles.label}>New Password</Text>
+          <TextInput
+            placeholder="Enter new password"
+            value={newPassword}
+            onChangeText={setNewPassword}
+            style={styles.textInput}
+            secureTextEntry
+          />
+          <Text
+            style={{
+              ...styles.label,
+              fontSize: 8,
+              fontFamily: fonts.PoppinsItalic,
+              color: colors.Danger,
+            }}>
+            *Leave blank if you do not wish to change your password now.
+          </Text>
+        </View>
+        <View
           style={{
-            ...styles.label,
-            fontSize: 8,
-            fontFamily: fonts.PoppinsItalic,
-            color: colors.Danger,
+            marginVertical: 5,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
           }}>
-          *Leave blank if you do not wish to change your password now.
-        </Text>
-      </View>
-      <View
-        style={{
-          marginVertical: 5,
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-evenly',
-        }}>
-        <TouchableOpacity
-          onPress={setInitialData}
-          style={{...styles.btn, backgroundColor: colors.Danger}}>
-          <Text style={styles.btnText}>Cancel</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={updateProfile} style={styles.btn}>
-          <Text style={styles.btnText}>Save Changes</Text>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            onPress={setInitialData}
+            style={{...styles.btn, backgroundColor: colors.Danger}}>
+            <Text style={styles.btnText}>Cancel</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={updateProfile} style={styles.btn}>
+            <Text style={styles.btnText}>Save Changes</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 }

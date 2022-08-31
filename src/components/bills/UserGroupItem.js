@@ -75,12 +75,13 @@ export default function UserGroupItem({item, billGroupName}) {
   };
 
   const openUpi = async () => {
-    const vpa = user.vpa;
-    const payeeName = user.userName;
+    // console.log(item.owner_vpa);
+    // return;
+    const vpa = item.owner_vpa;
+    const payeeName = item.owner_userName;
 
     const transactionNote = `Payment from Splitterify for Bill Split Group: ${billGroupName}`;
-    // const amount= item.amount_to_pay
-    const amount = '10';
+    const amount = item.amount_to_pay;
 
     await Linking.openURL(
       `upi://pay?pa=${vpa}&pn=${payeeName}&tn=${transactionNote}&am=${amount}&mc=0000&mode=02&purpose=00&cu=INR&tr=some-random-id-123`,
@@ -110,6 +111,7 @@ export default function UserGroupItem({item, billGroupName}) {
           text={item.email}
           userName={item.userName || item.guestName}
           email={item.email}
+          vpa={item.vpa}
           phoneNo={item.phoneNo}
           isGuest={!item.user_id}
         />

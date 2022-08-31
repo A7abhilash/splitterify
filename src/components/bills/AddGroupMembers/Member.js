@@ -11,6 +11,7 @@ export default function Member({user, onPress, icon, expense = null}) {
           userName={user.user_id ? user.userName : user.guestName}
           isGuest={!user.user_id}
           email={user.email}
+          vpa={user.vpa}
           phoneNo={user.phoneNo}
           text={user.email}
         />
