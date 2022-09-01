@@ -4,10 +4,17 @@ const shortid = require("shortid");
 module.exports = {
   createUser: (data, callback) => {
     const short_id = shortid.generate();
-    const sql = `insert into users (user_id, userName, phoneNo, email, password) values (?,?,?,?,?)`;
+    const sql = `insert into users (user_id, userName, phoneNo, vpa, email, password) values (?,?,?,?,?, ?)`;
     pool.query(
       sql,
-      [short_id, data.userName, data.phoneNo, data.email, data.password],
+      [
+        short_id,
+        data.userName,
+        data.phoneNo,
+        data.vpa,
+        data.email,
+        data.password,
+      ],
       (err, result) => {
         if (err) {
           return callback(err);
