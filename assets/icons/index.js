@@ -1,4 +1,5 @@
 export default {
+  logo: require('./logo.png'),
   hello: require('./hello.png'),
   welcome: require('./welcome.png'),
   home: require('./home.png'),
