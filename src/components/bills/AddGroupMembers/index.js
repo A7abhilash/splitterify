@@ -8,6 +8,7 @@ import SearchMembers from './SearchMembers';
 import {useMsg} from '../../../contexts/MsgContext';
 import CalculateExpense from './CalculateExpense';
 import Loading from '../../../containers/Loading';
+import LoadingUserGroupItem from '../LoadingUserGroupItem';
 
 export default function AddGroupMembers({billGroup, fetchDetails}) {
   const {setToast} = useMsg();
@@ -39,7 +40,7 @@ export default function AddGroupMembers({billGroup, fetchDetails}) {
       setToast(data.msg);
     } catch (error) {
       // console.log(error);
-      setToast("Failed to add group members. Please try again!");
+      setToast('Failed to add group members. Please try again!');
     } finally {
       setLoading(false);
     }
@@ -66,7 +67,12 @@ export default function AddGroupMembers({billGroup, fetchDetails}) {
   }, [list]);
 
   if (loading) {
-    return <Loading />;
+    return (
+      <>
+        <Text style={styles.headerText}>Group Members</Text>
+        <LoadingUserGroupItem />
+      </>
+    );
   }
 
   return (
@@ -107,6 +113,14 @@ export default function AddGroupMembers({billGroup, fetchDetails}) {
 }
 
 const styles = StyleSheet.create({
+  headerText: {
+    fontFamily: fonts.PoppinsMedium,
+    fontSize: 17,
+    textAlign: 'center',
+    marginVertical: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(0,0,0,0.4)',
+  },
   bottomBar: {
     justifyContent: 'space-evenly',
     flexDirection: 'row',
