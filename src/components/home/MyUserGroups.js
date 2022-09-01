@@ -1,11 +1,11 @@
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useData} from '../../contexts/DataContext';
-import Loading from '../../containers/Loading';
 import ListItem from './ListItem';
 import CreateNewBillSplitGroup from '../bills/CreateNewBillSplitGroup';
 import ListEmptyComponent from '../../containers/ListEmptyComponent';
 import {fonts} from '../../styles';
+import LoadingListItems from './LoadingListItems';
 
 export default function MyUserGroups() {
   const {loading, userGroups, billsGroupCreated, fetchData} = useData();
@@ -25,7 +25,12 @@ export default function MyUserGroups() {
   }, [userGroups, billsGroupCreated]);
 
   if (loading) {
-    return <Loading />;
+    return (
+      <>
+        <Text style={styles.headerText}>My Groups</Text>
+        <LoadingListItems nums={[1, 2, 3]} />
+      </>
+    );
   }
 
   return (

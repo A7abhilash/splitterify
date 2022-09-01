@@ -7,6 +7,7 @@ import ListItem from '../components/home/ListItem';
 import {useMsg} from '../contexts/MsgContext';
 import {BACKEND_URL} from '../utils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoadingListItems from '../components/home/LoadingListItems';
 
 export default function BillGroup() {
   const {params} = useRoute();
@@ -50,7 +51,7 @@ export default function BillGroup() {
   return (
     <View style={styles.container}>
       {loading ? (
-        <Loading />
+        <LoadingListItems />
       ) : (
         <ListItem item={billGroup} scene="MY_USER_GROUPS" show_status />
       )}

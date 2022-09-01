@@ -4,6 +4,7 @@ import {useData} from '../../contexts/DataContext';
 import Loading from '../../containers/Loading';
 import ListItem from '../home/ListItem';
 import ListEmptyComponent from '../../containers/ListEmptyComponent';
+import LoadingListItems from '../home/LoadingListItems';
 
 export default function SentRecords() {
   const {loading, userGroups, fetchData} = useData();
@@ -16,7 +17,7 @@ export default function SentRecords() {
   }, [userGroups]);
 
   if (loading) {
-    return <Loading />;
+    return <LoadingListItems nums={[1, 2, 3]} />;
   }
 
   return (

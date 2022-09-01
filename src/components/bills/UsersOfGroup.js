@@ -9,6 +9,7 @@ import {fonts} from '../../styles';
 import AddGroupMembers from './AddGroupMembers';
 import {useAuth} from '../../contexts/AuthContext';
 import ListEmptyComponent from '../../containers/ListEmptyComponent';
+import LoadingUserGroupItem from './LoadingUserGroupItem';
 
 export default function UsersOfGroup({bill_id, billGroup}) {
   const {user} = useAuth();
@@ -37,7 +38,7 @@ export default function UsersOfGroup({bill_id, billGroup}) {
       }
     } catch (error) {
       // console.log(error);
-      setToast("Something went wrong. Please try again later!");
+      setToast('Something went wrong. Please try again later!');
     } finally {
       setLoading(false);
     }
@@ -50,12 +51,17 @@ export default function UsersOfGroup({bill_id, billGroup}) {
   }, [bill_id]);
 
   if (loading) {
-    return <Loading />;
+    return (
+      <>
+        <Text style={styles.headerText}>Group Members</Text>
+        <LoadingUserGroupItem />
+      </>
+    );
   }
 
   return (
     <View style={{flex: 1}}>
-      <Text style={styles.headerText}>Group Members</Text>
+      <Text style={styles.headerText}>Group Members ({list?.length})</Text>
       {list?.length !== 0 ? (
         <FlatList
           data={list}

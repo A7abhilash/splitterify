@@ -5,6 +5,7 @@ import {useAuth} from '../../contexts/AuthContext';
 import Loading from '../../containers/Loading';
 import ListItem from './ListItem';
 import ListEmptyComponent from '../../containers/ListEmptyComponent';
+import LoadingListItems from '../home/LoadingListItems';
 
 export default function ToPay() {
   const {user} = useAuth();
@@ -22,7 +23,7 @@ export default function ToPay() {
   }, [userGroups, user]);
 
   if (loading) {
-    return <Loading />;
+    return <LoadingListItems nums={[1, 2, 3]} />;
   }
 
   return (

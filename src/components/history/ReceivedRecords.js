@@ -7,9 +7,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {BACKEND_URL} from '../../utils';
 import {useMsg} from '../../contexts/MsgContext';
 import {useData} from '../../contexts/DataContext';
+import LoadingListItems from '../home/LoadingListItems';
 
 export default function ReceivedRecords() {
-  const {setToast} = useMsg();
   const {receivedRecords, fetchData, loading} = useData();
 
   const [list, setList] = useState([]);
@@ -29,7 +29,7 @@ export default function ReceivedRecords() {
   }, [receivedRecords]);
 
   if (loading) {
-    return <Loading />;
+    return <LoadingListItems nums={[1, 2, 3]} />;
   }
 
   return (
