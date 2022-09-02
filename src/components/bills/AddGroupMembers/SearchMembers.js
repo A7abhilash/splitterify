@@ -45,7 +45,7 @@ export default function SearchMembers({list, setList}) {
       }
     } catch (error) {
       // console.log(error);
-      setToast("Failed to search users. Please try again!");
+      setToast('Failed to search users. Please try again!');
     } finally {
       setLoading(false);
     }
@@ -86,22 +86,40 @@ export default function SearchMembers({list, setList}) {
               onSubmitEditing={searchUsers}
             />
             {name && (
-              <TouchableOpacity
-                onPress={() =>
-                  addMember({
-                    guestName: name,
-                  })
-                }>
-                <Text
-                  style={{
-                    fontFamily: fonts.PoppinsMedium,
-                    color: colors.Warning,
-                    marginBottom: 0,
-                    paddingLeft: 5,
-                  }}>
-                  Add as Guest Member
-                </Text>
-              </TouchableOpacity>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                <TouchableOpacity
+                  onPress={() =>
+                    addMember({
+                      guestName: name,
+                    })
+                  }>
+                  <Text
+                    style={{
+                      fontFamily: fonts.PoppinsMedium,
+                      color: colors.Warning,
+                      marginBottom: 0,
+                      paddingLeft: 5,
+                    }}>
+                    Add as Guest Member
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={searchUsers}>
+                  <Text
+                    style={{
+                      fontFamily: fonts.PoppinsMedium,
+                      color: colors.Primary,
+                      marginBottom: 0,
+                      paddingLeft: 5,
+                    }}>
+                    Search
+                  </Text>
+                </TouchableOpacity>
+              </View>
             )}
           </>
         }

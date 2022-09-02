@@ -89,14 +89,14 @@ export function AuthProvider({children}) {
       });
   };
 
-  const signUp = (userName, email, password, phoneNo) => {
+  const signUp = (userName, email, password, phoneNo, vpa) => {
     fetch(BACKEND_URL + '/auth/signUp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
-      body: JSON.stringify({userName, email, password, phoneNo}),
+      body: JSON.stringify({userName, email, password, phoneNo, vpa}),
     })
       .then(res => res.json())
       .then(async data => {

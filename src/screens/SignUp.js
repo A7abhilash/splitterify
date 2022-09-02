@@ -26,6 +26,8 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [vpa, setVpa] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
   const navigation = useNavigation();
 
   const handlePress = async () => {
@@ -37,7 +39,9 @@ const SignUp = () => {
       vpa.trim()
     ) {
       Keyboard.dismiss();
+      setLoading(true);
       await signUp(userName, email, password, phoneNo, vpa);
+      setLoading(false);
     } else {
       setAlert({
         title: 'Invalid',
@@ -117,15 +121,25 @@ const SignUp = () => {
           </View>
           <View>
             <View>
-              <TouchableOpacity onPress={handlePress} style={styles.btn}>
+              <TouchableOpacity
+                disabled={loading}
+                onPress={handlePress}
+                style={styles.btn}>
                 <Text style={styles.btnText}>SIGN UP</Text>
               </TouchableOpacity>
+              {loading && (
+                <Text style={styles.label}>
+                  Please wait while we sign you up with Splitterify...
+                </Text>
+              )}
             </View>
           </View>
         </View>
+        <Text style={styles.label}>Already have an account?</Text>
         <View style={styles.bottomView}>
-          <Text style={styles.label}>Already have an account?</Text>
-          <TouchableOpacity onPress={() => navigation.replace('SignIn')}>
+          <TouchableOpacity
+            disabled={loading}
+            onPress={() => navigation.replace('SignIn')}>
             <Text style={{...styles.label, color: colors.Primary}}>
               Sign In
             </Text>

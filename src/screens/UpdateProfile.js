@@ -25,6 +25,8 @@ export default function UpdateProfile() {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
   const setInitialData = () => {
     setUserName(user?.userName || '');
     setEmail(user?.email || '');
@@ -51,6 +53,8 @@ export default function UpdateProfile() {
       return;
     }
     try {
+      setLoading(true);
+
       const profile = {
         userName: userName.trim() ? userName : user.userName,
         email: email.trim() ? email : user.email,
@@ -82,6 +86,8 @@ export default function UpdateProfile() {
     } catch (error) {
       console.log(error);
       setToast('Something went wrong. Please try again later!');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -163,14 +169,23 @@ export default function UpdateProfile() {
             justifyContent: 'space-evenly',
           }}>
           <TouchableOpacity
+            disabled={loading}
             onPress={setInitialData}
             style={{...styles.btn, backgroundColor: colors.Danger}}>
             <Text style={styles.btnText}>Cancel</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={updateProfile} style={styles.btn}>
+          <TouchableOpacity
+            disabled={loading}
+            onPress={updateProfile}
+            style={styles.btn}>
             <Text style={styles.btnText}>Save Changes</Text>
           </TouchableOpacity>
         </View>
+        {loading && (
+          <Text style={styles.label}>
+            Please wait while we update your profile...
+          </Text>
+        )}
       </ScrollView>
     </View>
   );

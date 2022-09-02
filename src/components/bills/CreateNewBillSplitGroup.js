@@ -35,6 +35,8 @@ export default function CreateNewBillSplitGroup() {
   const [expense, setExpense] = useState(0);
   const [switchOn, setSwitchOn] = useState(false);
 
+  const [loading, setLoading] = useState(false);
+
   const navigation = useNavigation();
 
   const setInitialData = () => {
@@ -52,6 +54,7 @@ export default function CreateNewBillSplitGroup() {
       // console.log({name, expense, switchOn});
       if (name.trim() && expense) {
         Keyboard.dismiss();
+        setLoading(true);
 
         const newGroup = {
           name,
@@ -85,6 +88,8 @@ export default function CreateNewBillSplitGroup() {
     } catch (error) {
       // console.log(error);
       setToast('Failed to create new Bill Split Group. Please try again!');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -147,6 +152,7 @@ export default function CreateNewBillSplitGroup() {
           </View>
           <TouchableOpacity
             onPress={handleCreate}
+            disabled={loading}
             style={{
               ...styles.modalBtn,
               backgroundColor: colors.Success,
@@ -157,12 +163,20 @@ export default function CreateNewBillSplitGroup() {
               Create
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={closeModal} style={{...styles.modalBtn}}>
+          <TouchableOpacity
+            disabled={loading}
+            onPress={closeModal}
+            style={{...styles.modalBtn}}>
             <Text style={{...styles.modalBtnText, color: colors.Danger}}>
               Cancel
             </Text>
           </TouchableOpacity>
         </View>
+        {loading && (
+          <Text style={styles.label}>
+            Please wait while we sign you up with Splitterify...
+          </Text>
+        )}
       </Modal>
     </>
   );
